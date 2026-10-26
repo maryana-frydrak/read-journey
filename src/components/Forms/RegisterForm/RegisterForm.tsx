@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import styles from "./RegisterForm.module.css";
 
 export default function RegisterForm() {
   const [formData, setFormData] = useState({
@@ -9,6 +10,7 @@ export default function RegisterForm() {
     email: "",
     password: "",
   });
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -20,68 +22,95 @@ export default function RegisterForm() {
   };
 
   return (
-    <div className="w-full max-w-md p-8 rounded-2xl bg-[#1f1f1f] shadow-xl">
-      <h2 className="text-2xl font-bold mb-6 text-white">Реєстрація</h2>
-
-      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-        <div>
-          <label className="block text-sm mb-2 text-gray-300">Ім'я</label>
-          <input
-            type="text"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-            placeholder="Введіть ваше ім'я"
-            required
-            className="w-full px-4 py-3 rounded-lg bg-[#2a2a2a] border border-gray-700 text-white focus:outline-none focus:border-[#ff6b0a]"
-          />
+    <div className={styles.container}>
+      <div>
+        {/* Логотип */}
+        <div className={styles.logo}>
+          <svg width="24" height="17" viewBox="0 0 24 17" fill="none">
+            <use href="/icons.svg#icon-logo-icon" />
+          </svg>
+          <span className={styles.logoText}>READ JOURNEY</span>
         </div>
 
-        <div>
-          <label className="block text-sm mb-2 text-gray-300">
-            Електронна пошта
-          </label>
-          <input
-            type="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            placeholder="your@email.com"
-            required
-            className="w-full px-4 py-3 rounded-lg bg-[#2a2a2a] border border-gray-700 text-white focus:outline-none focus:border-[#ff6b0a]"
-          />
-        </div>
+        {/* Заголовок */}
+        <h1 className={styles.title}>
+          Expand your <br />
+          mind, reading <br />
+          <span className={styles.titleSecondary}>a book</span>
+        </h1>
 
-        <div>
-          <label className="block text-sm mb-2 text-gray-300">Пароль</label>
-          <input
-            type="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-            placeholder="Створіть пароль"
-            required
-            className="w-full px-4 py-3 rounded-lg bg-[#2a2a2a] border border-gray-700 text-white focus:outline-none focus:border-[#ff6b0a]"
-          />
-        </div>
+        {/* Форма */}
+        <form onSubmit={handleSubmit} className={styles.form}>
+          {/* Поле Name */}
+          <div className={styles.inputGroup}>
+            <span className={styles.label}>Name:</span>
+            <input
+              type="text"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              placeholder="Ilona Ratushniak"
+              required
+              className={styles.input}
+            />
+          </div>
 
-        <button
-          type="submit"
-          className="mt-4 w-full py-3 px-4 bg-[#ff6b0a] hover:bg-[#e05e05] text-white font-semibold rounded-lg transition-colors cursor-pointer"
-        >
-          Зареєструватися
-        </button>
-      </form>
+          {/* Поле Mail */}
+          <div className={styles.inputGroup}>
+            <span className={styles.label}>Mail:</span>
+            <input
+              type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              placeholder="your@email.com"
+              required
+              className={styles.input}
+            />
+          </div>
 
-      <p className="mt-6 text-center text-sm text-gray-400">
-        Вже маєте акаунт?{" "}
-        <Link
-          href="/login"
-          className="text-[#ff6b0a] hover:underline font-medium"
-        >
-          Увійти
-        </Link>
-      </p>
+          {/* Поле Password */}
+          <div className={styles.inputGroup}>
+            <span className={styles.label}>Password:</span>
+            <input
+              type={showPassword ? "text" : "password"}
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              placeholder="Yourpasswordhere"
+              required
+              className={`${styles.input} ${styles.inputPassword}`}
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className={styles.eyeButton}
+            >
+              <svg
+                width="20"
+                height="20"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <use
+                  href={`/icons.svg#${showPassword ? "icon-open-eye" : "icon-close-eye"}`}
+                />
+              </svg>
+            </button>
+          </div>
+
+          {/* Кнопки під формою */}
+          <div className={styles.actions}>
+            <button type="submit" className={styles.submitBtn}>
+              Registration
+            </button>
+            <Link href="/login" className={styles.link}>
+              Already have an account?
+            </Link>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }

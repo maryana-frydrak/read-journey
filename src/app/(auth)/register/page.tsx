@@ -1,21 +1,27 @@
 import RegisterForm from "@/components/Forms/RegisterForm/RegisterForm";
+import Image from "next/image";
+import styles from "./page.module.css";
 
 export default function RegisterPage() {
   return (
-    <main className="min-h-screen flex flex-col lg:flex-row items-center justify-center p-6 lg:p-12 gap-12">
-      <div className="w-full lg:w-1/2 flex justify-center">
+    <main className={styles.main}>
+      <div className={styles.container}>
+        {/* Ліва частина — Форма */}
         <RegisterForm />
-      </div>
 
-      {/* Права колонка: Промо-блок / Інформація про проєкт */}
-      <div className="w-full lg:w-1/2 flex flex-col items-center lg:items-start text-center lg:text-left">
-        <h1 className="text-4xl lg:text-5xl font-bold mb-4 text-white">
-          Read Journey
-        </h1>
-        <p className="text-lg text-gray-400 max-w-md">
-          Розширюйте свій світогляд, читаючи книги. Почніть свою літературну
-          подорож разом із нами вже сьогодні.
-        </p>
+        {/* Права частина — Планшет / Телефон картинка */}
+        <div className={styles.imageWrapper}>
+          <div className={styles.imageContainer}>
+            <Image
+              src="/images/iPhone.png.png"
+              alt="Read Journey App"
+              width={400}
+              height={550}
+              className={styles.image}
+              priority
+            />
+          </div>
+        </div>
       </div>
     </main>
   );
