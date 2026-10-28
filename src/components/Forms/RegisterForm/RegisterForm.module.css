@@ -1,7 +1,7 @@
 .container {
   width: 100%;
   background-color: #1f1f1f;
-  padding: 32px;
+  padding: 40px 64px;
   border-radius: 30px;
   display: flex;
   flex-direction: column;
@@ -9,53 +9,47 @@
   min-height: 600px;
 }
 
-@media (min-width: 768px) {
-  .container {
-    padding: 48px;
-  }
-}
-
-.logo svg {
-  fill: #f9f9f9; /* або потрібний колір */
-}
-
 .logo {
   display: flex;
   align-items: center;
-  gap: 8px;
-  margin-bottom: 40px;
+  gap: 4px;
+  margin-bottom: 107px;
+}
+
+.logo svg {
+  fill: #f9f9f9;
 }
 
 .logoText {
   font-weight: 700;
-  letter-spacing: 0.05em;
-  font-size: 14px;
+  font-size: 18px;
+
+  line-height: 1;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
   color: #f9f9f9;
 }
 
 .title {
-  font-size: 36px;
   font-weight: 700;
-  color: #f9f9f9;
-  margin-bottom: 40px;
-  line-height: 1.25;
-}
+  font-size: 64px;
 
-@media (min-width: 768px) {
-  .title {
-    font-size: 48px;
-  }
+  line-height: 0.94;
+  letter-spacing: 0.02em;
+  color: #f9f9f9;
+
+  margin-bottom: 40px;
 }
 
 .titleSecondary {
-  color: #686868;
+  color: rgba(227, 227, 227, 0.5);
 }
 
 .form {
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  max-width: 400px;
+  gap: 14px;
+  max-width: 472px;
 }
 
 .inputGroup {
@@ -64,29 +58,41 @@
   align-items: center;
   background-color: #262626;
   border-radius: 12px;
-  padding: 12px 16px;
+  padding: 16px 14px;
   border: 1px solid transparent;
   transition: border-color 0.2s ease;
 }
 
-.inputGroup:focus-within {
-  border-color: #686868;
+.inputGroup:hover,
+.inputGroup:focus {
+  border-color: rgba(249, 249, 249, 0.1);
 }
 
 .label {
-  color: #686868;
+  font-weight: 500;
   font-size: 14px;
-  margin-right: 8px;
-  user-select: none;
+
+  line-height: 1.28;
+  letter-spacing: -0.02em;
+  color: #686868;
+
+  margin-right: 10px;
 }
 
-.input {
-  background: transparent;
-  color: #f9f9f9;
+.inputText {
+  font-weight: 500;
   font-size: 14px;
-  width: 100%;
+
+  line-height: 1.28;
+  letter-spacing: -0.02em;
+
+  background-color: transparent;
   border: none;
-  outline: none;
+}
+
+.inputText::placeholder {
+  color: #f9f9f9;
+  opacity: 0.8;
 }
 
 .inputPassword {

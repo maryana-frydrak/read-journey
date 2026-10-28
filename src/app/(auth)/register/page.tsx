@@ -6,10 +6,8 @@ export default function RegisterPage() {
   return (
     <main className={styles.main}>
       <div className={styles.container}>
-        {/* Ліва частина — Форма */}
         <RegisterForm />
 
-        {/* Права частина — Планшет / Телефон картинка */}
         <div className={styles.imageWrapper}>
           <div className={styles.imageContainer}>
             <Image
