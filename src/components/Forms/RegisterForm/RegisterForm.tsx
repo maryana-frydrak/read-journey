@@ -2,23 +2,36 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as Yup from "yup";
+import { registerSchema } from "@/utils/authValidation";
 import styles from "./RegisterForm.module.css";
 
+type FormData = Yup.InferType<typeof registerSchema>;
+
 export default function RegisterForm() {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    password: "",
-  });
   const [showPassword, setShowPassword] = useState(false);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, touchedFields },
+  } = useForm({
+    resolver: yupResolver(registerSchema),
+    mode: "onChange",
+  });
+
+  const onSubmit = (data: FormData) => {
+    console.log("Register data:", data);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log("Register data:", formData);
+  const getInputGroupClass = (fieldName: keyof FormData) => {
+    if (errors[fieldName])
+      return `${styles.inputGroup} ${styles.inputGroupError}`;
+    if (touchedFields[fieldName] && !errors[fieldName])
+      return `${styles.inputGroup} ${styles.inputGroupSuccess}`;
+    return styles.inputGroup;
   };
 
   return (
@@ -37,61 +50,98 @@ export default function RegisterForm() {
           <span className={styles.titleSecondary}>a book</span>
         </h1>
 
-        <form onSubmit={handleSubmit} className={styles.form}>
-          <div className={styles.inputGroup}>
+        <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
+          <div className={getInputGroupClass("name")}>
             <span className={styles.label}>Name:</span>
             <input
               type="text"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              placeholder="Ilona Ratushniak"
-              required
+              placeholder=""
               className={styles.inputText}
+              {...register("name")}
             />
+            {errors.name && (
+              <svg width="18" height="18" className={styles.statusIcon}>
+                <use href="/icons.svg#icon-pajamas-error" />
+              </svg>
+            )}
+            {!errors.name && touchedFields.name && (
+              <svg width="18" height="18" className={styles.statusIcon}>
+                <use href="/icons.svg#icon-check-ok" />
+              </svg>
+            )}
+            {errors.name && (
+              <p className={styles.messageError}>{errors.name.message}</p>
+            )}
           </div>
 
-          <div className={styles.inputGroup}>
+          <div className={getInputGroupClass("email")}>
             <span className={styles.label}>Mail:</span>
             <input
               type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              placeholder="your@email.com"
-              required
+              placeholder=""
               className={styles.inputText}
+              {...register("email")}
             />
+            {errors.email && (
+              <svg width="18" height="18" className={styles.statusIcon}>
+                <use href="/icons.svg#icon-pajamas-error" />
+              </svg>
+            )}
+            {!errors.email && touchedFields.email && (
+              <svg width="18" height="18" className={styles.statusIcon}>
+                <use href="/icons.svg#icon-check-ok" />
+              </svg>
+            )}
+            {errors.email && (
+              <p className={styles.messageError}>{errors.email.message}</p>
+            )}
           </div>
 
-          <div className={styles.inputGroup}>
+          <div className={getInputGroupClass("password")}>
             <span className={styles.label}>Password:</span>
             <input
               type={showPassword ? "text" : "password"}
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-              placeholder="Yourpasswordhere"
-              required
+              placeholder=""
               className={`${styles.inputText} ${styles.inputPassword}`}
             />
-            <button
-              type="button"
-              onClick={() => setShowPassword(!showPassword)}
-              className={styles.eyeButton}
-            >
-              <svg
-                width="20"
-                height="20"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
+            <div className={styles.passwordIcons}>
+              {errors.password && (
+                <svg width="18" height="18" className={styles.statusIcon}>
+                  <use href="/icons.svg#icon-pajamas-error" />
+                </svg>
+              )}
+              {!errors.password && touchedFields.password && (
+                <svg width="18" height="18" className={styles.statusIcon}>
+                  <use href="/icons.svg#icon-check-ok" />
+                </svg>
+              )}
+
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className={styles.eyeButton}
               >
-                <use
-                  href={`/icons.svg#${showPassword ? "icon-open-eye" : "icon-close-eye"}`}
-                />
-              </svg>
-            </button>
+                <svg
+                  width="20"
+                  height="20"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <use
+                    href={`/icons.svg#${showPassword ? "icon-open-eye" : "icon-close-eye"}`}
+                  />
+                </svg>
+              </button>
+            </div>
+            {errors.password && (
+              <p className={styles.messageError}>
+                {errors.password?.message as string}
+              </p>
+            )}
+            {!errors.password && touchedFields.password && (
+              <p className={styles.messageSuccess}>Password is secure</p>
+            )}
           </div>
 
           <div className={styles.actions}>

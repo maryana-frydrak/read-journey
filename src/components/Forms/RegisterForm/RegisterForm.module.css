@@ -68,6 +68,38 @@
   border-color: rgba(249, 249, 249, 0.1);
 }
 
+.inputGroupError {
+  border-color: #e90516;
+}
+
+.inputGroupSuccess {
+  border-color: #30b94d;
+}
+
+.messageError {
+  font-weight: 500;
+  font-size: 12px;
+
+  line-height: 1.17;
+  letter-spacing: -0.02em;
+  color: #e90516;
+
+  margin-top: 8px;
+  margin-left: 14px;
+}
+
+.messageSuccess {
+  font-weight: 500;
+  font-size: 12px;
+
+  line-height: 1.17;
+  letter-spacing: -0.02em;
+  color: #30b94d;
+
+  margin-top: 8px;
+  margin-left: 14px;
+}
+
 .label {
   font-weight: 500;
   font-size: 14px;
@@ -85,9 +117,11 @@
 
   line-height: 1.28;
   letter-spacing: -0.02em;
+  color: #f9f9f9;
 
   background-color: transparent;
   border: none;
+  outline: none;
 }
 
 .inputText::placeholder {
@@ -104,7 +138,6 @@
   right: 16px;
   background: none;
   border: none;
-  color: #686868;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -113,49 +146,55 @@
   transition: color 0.2s ease;
 }
 
-.eyeButton:hover {
-  color: #f9f9f9;
-}
-
 .eyeButton svg {
-  stroke: #686868; /* колір за замовчуванням */
+  stroke: #f9f9f9;
   transition: stroke 0.2s ease;
-}
-
-.eyeButton:hover svg {
-  stroke: #f9f9f9; /* колір при наведенні */
 }
 
 .actions {
   display: flex;
   align-items: center;
   gap: 20px;
-  margin-top: 16px;
+  margin-top: 82px;
 }
 
 .submitBtn {
-  padding: 12px 32px;
+  padding: 16px 54px;
   background-color: #f9f9f9;
-  color: #141414;
+  border-radius: 30px;
+  border: 1px solid transparent;
+
   font-weight: 700;
-  border-radius: 9999px;
-  border: none;
-  font-size: 14px;
-  cursor: pointer;
+  font-size: 20px;
+
+  line-height: 1;
+  letter-spacing: 0.02em;
+  color: #1f1f1f;
+
   transition: background-color 0.2s ease;
 }
 
-.submitBtn:hover {
-  background-color: #e2e2e2;
+.submitBtn:hover,
+.submitBtn:focus {
+  border: 1px solid rgba(249, 249, 249, 0.2);
+  color: #f9f9f9;
+  background-color: transparent;
 }
 
 .link {
-  color: #686868;
+  font-weight: 500;
   font-size: 14px;
+
+  line-height: 1.29;
+  letter-spacing: -0.02em;
   text-decoration: underline;
+  text-decoration-skip-ink: none;
+  color: #686868;
+
   transition: color 0.2s ease;
 }
 
-.link:hover {
+.link:hover,
+.link:focus {
   color: #f9f9f9;
 }
