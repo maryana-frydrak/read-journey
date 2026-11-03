@@ -52,6 +52,12 @@
   max-width: 472px;
 }
 
+.fieldWrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
 .inputGroup {
   position: relative;
   display: flex;
@@ -129,16 +135,33 @@
   opacity: 0.8;
 }
 
-.inputPassword {
-  padding-right: 32px;
+.statusIcon {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.statusIconError {
+  fill: #e90516;
+}
+
+.statusIconSuccess {
+  fill: #30b94d;
+}
+
+.passwordIcons {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .eyeButton {
   position: absolute;
-  right: 16px;
+  right: 15px;
   background: none;
   border: none;
-  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -149,6 +172,14 @@
 .eyeButton svg {
   stroke: #f9f9f9;
   transition: stroke 0.2s ease;
+}
+
+.eye-icon {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
 }
 
 .actions {

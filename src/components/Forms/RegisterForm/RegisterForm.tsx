@@ -51,88 +51,114 @@ export default function RegisterForm() {
         </h1>
 
         <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
-          <div className={getInputGroupClass("name")}>
-            <span className={styles.label}>Name:</span>
-            <input
-              type="text"
-              placeholder=""
-              className={styles.inputText}
-              {...register("name")}
-            />
-            {errors.name && (
-              <svg width="18" height="18" className={styles.statusIcon}>
-                <use href="/icons.svg#icon-pajamas-error" />
-              </svg>
-            )}
-            {!errors.name && touchedFields.name && (
-              <svg width="18" height="18" className={styles.statusIcon}>
-                <use href="/icons.svg#icon-check-ok" />
-              </svg>
-            )}
+          <div className="fieldWrapper">
+            <div className={getInputGroupClass("name")}>
+              <span className={styles.label}>Name:</span>
+              <input
+                type="text"
+                placeholder=""
+                className={styles.inputText}
+                {...register("name")}
+              />
+              {errors.name && (
+                <svg
+                  width="20"
+                  height="20"
+                  className={`${styles.statusIcon} ${styles.statusIconError}`}
+                >
+                  <use href="/icons.svg#icon-pajamas-error" />
+                </svg>
+              )}
+              {!errors.name && touchedFields.name && (
+                <svg
+                  width="20"
+                  height="20"
+                  className={`${styles.statusIcon} ${styles.statusIconSuccess}`}
+                >
+                  <use href="/icons.svg#icon-check-ok" />
+                </svg>
+              )}
+            </div>
+
             {errors.name && (
               <p className={styles.messageError}>{errors.name.message}</p>
             )}
           </div>
 
-          <div className={getInputGroupClass("email")}>
-            <span className={styles.label}>Mail:</span>
-            <input
-              type="email"
-              placeholder=""
-              className={styles.inputText}
-              {...register("email")}
-            />
-            {errors.email && (
-              <svg width="18" height="18" className={styles.statusIcon}>
-                <use href="/icons.svg#icon-pajamas-error" />
-              </svg>
-            )}
-            {!errors.email && touchedFields.email && (
-              <svg width="18" height="18" className={styles.statusIcon}>
-                <use href="/icons.svg#icon-check-ok" />
-              </svg>
-            )}
+          <div className="fieldWrapper">
+            <div className={getInputGroupClass("email")}>
+              <span className={styles.label}>Mail:</span>
+              <input
+                type="email"
+                placeholder=""
+                className={styles.inputText}
+                {...register("email")}
+              />
+              {errors.email && (
+                <svg
+                  width="20"
+                  height="20"
+                  className={`${styles.statusIcon} ${styles.statusIconError}`}
+                >
+                  <use href="/icons.svg#icon-pajamas-error" />
+                </svg>
+              )}
+              {!errors.email && touchedFields.email && (
+                <svg
+                  width="20"
+                  height="20"
+                  className={`${styles.statusIcon} ${styles.statusIconSuccess}`}
+                >
+                  <use href="/icons.svg#icon-check-ok" />
+                </svg>
+              )}
+            </div>
+
             {errors.email && (
               <p className={styles.messageError}>{errors.email.message}</p>
             )}
           </div>
 
-          <div className={getInputGroupClass("password")}>
-            <span className={styles.label}>Password:</span>
-            <input
-              type={showPassword ? "text" : "password"}
-              placeholder=""
-              className={`${styles.inputText} ${styles.inputPassword}`}
-            />
-            <div className={styles.passwordIcons}>
-              {errors.password && (
-                <svg width="18" height="18" className={styles.statusIcon}>
-                  <use href="/icons.svg#icon-pajamas-error" />
-                </svg>
-              )}
-              {!errors.password && touchedFields.password && (
-                <svg width="18" height="18" className={styles.statusIcon}>
-                  <use href="/icons.svg#icon-check-ok" />
-                </svg>
-              )}
-
-              <button
-                type="button"
-                onClick={() => setShowPassword(!showPassword)}
-                className={styles.eyeButton}
-              >
-                <svg
-                  width="20"
-                  height="20"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
+          <div className="fieldWrapper">
+            <div className={getInputGroupClass("password")}>
+              <span className={styles.label}>Password:</span>
+              <input
+                type={showPassword ? "text" : "password"}
+                placeholder=""
+                className={`${styles.inputText} ${styles.inputPassword}`}
+                {...register("password")}
+              />
+              <div className={styles.passwordIcons}>
+                {errors.password && (
+                  <svg
+                    width="20"
+                    height="20"
+                    className={`${styles.statusIcon} ${styles.statusIconError}`}
+                  >
+                    <use href="/icons.svg#icon-pajamas-error" />
+                  </svg>
+                )}
+                {!errors.password && touchedFields.password && (
+                  <svg
+                    width="20"
+                    height="20"
+                    className={`${styles.statusIcon} ${styles.statusIconSuccess}`}
+                  >
+                    <use href="/icons.svg#icon-check-ok" />
+                  </svg>
+                )}
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className={styles.eyeButton}
                 >
-                  <use
-                    href={`/icons.svg#${showPassword ? "icon-open-eye" : "icon-close-eye"}`}
-                  />
-                </svg>
-              </button>
+                  <svg width="20" height="20" className={styles.eyeIcon}>
+                    <use
+                      href={`/icons.svg#${showPassword ? "icon-open-eye" : "icon-close-eye"}`}
+                    />
+                  </svg>
+                </button>
+              </div>
             </div>
             {errors.password && (
               <p className={styles.messageError}>
