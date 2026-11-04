@@ -1,0 +1,238 @@
+.container {
+  width: 100%;
+  background-color: #1f1f1f;
+  padding: 40px 64px;
+  border-radius: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 600px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 107px;
+}
+
+.logo svg {
+  fill: #f9f9f9;
+}
+
+.logoText {
+  font-weight: 700;
+  font-size: 18px;
+
+  line-height: 1;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: #f9f9f9;
+}
+
+.title {
+  font-weight: 700;
+  font-size: 64px;
+
+  line-height: 0.94;
+  letter-spacing: 0.02em;
+  color: #f9f9f9;
+
+  margin-bottom: 40px;
+}
+
+.titleSecondary {
+  color: rgba(227, 227, 227, 0.5);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  max-width: 472px;
+}
+
+.fieldWrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.inputGroup {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background-color: #262626;
+  border-radius: 12px;
+  padding: 16px 14px;
+  border: 1px solid transparent;
+  transition: border-color 0.2s ease;
+}
+
+.inputGroup:hover,
+.inputGroup:focus {
+  border-color: rgba(249, 249, 249, 0.1);
+}
+
+.inputGroupError {
+  border-color: #e90516;
+}
+
+.inputGroupSuccess {
+  border-color: #30b94d;
+}
+
+.messageError {
+  font-weight: 500;
+  font-size: 12px;
+
+  line-height: 1.17;
+  letter-spacing: -0.02em;
+  color: #e90516;
+
+  margin-top: 8px;
+  margin-left: 14px;
+}
+
+.messageSuccess {
+  font-weight: 500;
+  font-size: 12px;
+
+  line-height: 1.17;
+  letter-spacing: -0.02em;
+  color: #30b94d;
+
+  margin-top: 8px;
+  margin-left: 14px;
+}
+
+.label {
+  font-weight: 500;
+  font-size: 14px;
+
+  line-height: 1.28;
+  letter-spacing: -0.02em;
+  color: #686868;
+
+  margin-right: 10px;
+}
+
+.inputText {
+  font-weight: 500;
+  font-size: 14px;
+
+  line-height: 1.28;
+  letter-spacing: -0.02em;
+  color: #f9f9f9;
+
+  background-color: transparent;
+  border: none;
+  outline: none;
+}
+
+.inputText::placeholder {
+  color: #f9f9f9;
+  opacity: 0.8;
+}
+
+.statusIcon {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.statusIconError {
+  fill: #e90516;
+}
+
+.statusIconSuccess {
+  fill: #30b94d;
+}
+
+.passwordIcons {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.eyeButton {
+  position: absolute;
+  right: 15px;
+  background: none;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  transition: color 0.2s ease;
+}
+
+.eyeButton svg {
+  stroke: #f9f9f9;
+  transition: stroke 0.2s ease;
+}
+
+.eye-icon {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+/* .actions {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-top: 82px;
+} */
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-top: 146px;
+}
+
+.submitBtn {
+  padding: 16px 54px;
+  background-color: #f9f9f9;
+  border-radius: 30px;
+  border: 1px solid transparent;
+
+  font-weight: 700;
+  font-size: 20px;
+
+  line-height: 1;
+  letter-spacing: 0.02em;
+  color: #1f1f1f;
+
+  transition: background-color 0.2s ease;
+}
+
+.submitBtn:hover,
+.submitBtn:focus {
+  border: 1px solid rgba(249, 249, 249, 0.2);
+  color: #f9f9f9;
+  background-color: transparent;
+}
+
+.link {
+  font-weight: 500;
+  font-size: 14px;
+
+  line-height: 1.29;
+  letter-spacing: -0.02em;
+  text-decoration: underline;
+  text-decoration-skip-ink: none;
+  color: #686868;
+
+  transition: color 0.2s ease;
+}
+
+.link:hover,
+.link:focus {
+  color: #f9f9f9;
+}

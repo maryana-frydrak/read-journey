@@ -22,9 +22,7 @@ export default function RegisterForm() {
     mode: "onChange",
   });
 
-  const onSubmit = (data: FormData) => {
-    console.log("Register data:", data);
-  };
+  const onSubmit = (data: FormData) => {};
 
   const getInputGroupClass = (fieldName: keyof FormData) => {
     if (errors[fieldName])
