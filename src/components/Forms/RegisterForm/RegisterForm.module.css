@@ -30,6 +30,11 @@
   color: #f9f9f9;
 }
 
+.logo:hover,
+.logo:focus {
+  opacity: 0.6;
+}
+
 .title {
   font-weight: 700;
   font-size: 64px;

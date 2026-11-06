@@ -6,11 +6,14 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 import { registerSchema } from "@/utils/authValidation";
+import { useRouter } from "next/navigation";
+import { signupUser } from "@/redux/api";
 import styles from "./RegisterForm.module.css";
 
 type FormData = Yup.InferType<typeof registerSchema>;
 
 export default function RegisterForm() {
+  const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
 
   const {
@@ -22,7 +25,14 @@ export default function RegisterForm() {
     mode: "onChange",
   });
 
-  const onSubmit = (data: FormData) => {};
+  const onSubmit = async (data: FormData) => {
+    try {
+      await signupUser(data);
+      router.push("/recommended");
+    } catch (error) {
+      console.error("Registration failed:", error);
+    }
+  };
 
   const getInputGroupClass = (fieldName: keyof FormData) => {
     if (errors[fieldName])

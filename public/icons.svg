@@ -42,5 +42,9 @@
 <path d="M0 20.706v-20.706h24.264c3.299 0 6.512 1.051 9.173 3.001 1.591 1.166 2.861 2.715 3.693 4.503l2.807 6.034c1.084-2.647 2.443-5.173 4.055-7.536l0.139-0.204c0.463-0.679 0.992-1.31 1.58-1.884l1.196-1.168c0.779-0.762 1.704-1.358 2.719-1.755l0.103-0.040c1.608-0.629 3.32-0.951 5.047-0.951h24.283v20.706h-79.059z"></path>
 <path d="M0 24.471h79.059v7.529h-79.059v-7.529z"></path>
 </symbol>
+<symbol id="icon-close" viewBox="0 0 32 32">
+<path stroke-linejoin="round" stroke-linecap="round" stroke-miterlimit="4" stroke-width="2.5" d="M24 8l-16 16"></path>
+<path stroke-linejoin="round" stroke-linecap="round" stroke-miterlimit="4" stroke-width="2.5" d="M8 8l16 16"></path>
+</symbol>
 </defs>
 </svg>

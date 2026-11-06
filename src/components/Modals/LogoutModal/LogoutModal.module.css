@@ -1,0 +1,91 @@
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.modal {
+  position: relative;
+  background-color: #1f1f1f;
+  border: 1px solid rgba(249, 249, 249, 0.2);
+  border-radius: 30px;
+  padding: 40px 32px;
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+}
+
+.closeBtn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: none;
+  border: none;
+  padding: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+}
+
+.closeBtn svg {
+  width: 20px;
+  height: 20px;
+  stroke-width: 2.5px;
+  stroke: #f9f9fc;
+  fill: none;
+}
+
+.closeBtn:hover svg,
+.closeBtn:focus svg {
+  opacity: 0.6;
+}
+
+.title {
+  color: #f9f9f9;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.33;
+  margin-bottom: 28px;
+}
+
+.buttonsGroup {
+  display: flex;
+  justify-content: center;
+  gap: 32px;
+}
+
+.cancelBtn,
+.confirmBtn {
+  padding: 14px 28px;
+  background-color: #f9f9f9;
+  border-radius: 30px;
+  border: none;
+
+  font-weight: 700;
+  font-size: 18px;
+
+  line-height: 1;
+  letter-spacing: 0.02em;
+  color: #1f1f1f;
+
+  transition: background-color 0.2s ease;
+}
+
+.cancelBtn:hover,
+.cancelBtn:focus,
+.confirmBtn:hover,
+.confirmBtn:focus {
+  border: 1px solid rgba(249, 249, 249, 0.2);
+  color: #f9f9f9;
+  background-color: #1f1f1f;
+}

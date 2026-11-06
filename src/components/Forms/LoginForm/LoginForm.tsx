@@ -6,11 +6,14 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 import { loginSchema } from "@/utils/authValidation";
+import { useRouter } from "next/navigation";
+import { signinUser } from "@/redux/api";
 import styles from "./LoginForm.module.css";
 
 type FormData = Yup.InferType<typeof loginSchema>;
 
 export default function LoginForm() {
+  const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
 
   const {
@@ -22,7 +25,14 @@ export default function LoginForm() {
     mode: "onChange",
   });
 
-  const onSubmit = (data: FormData) => {};
+  const onSubmit = async (data: FormData) => {
+    try {
+      await signinUser(data);
+      router.push("/recommended");
+    } catch (error) {
+      console.error("Login failed:", error);
+    }
+  };
 
   const getInputGroupClass = (fieldName: keyof FormData) => {
     if (errors[fieldName])
