@@ -1,4 +1,4 @@
-import React from "react";
+import { signoutUser } from "@/redux/api";
 import styles from "./LogoutModal.module.css";
 
 interface LogoutModalProps {
@@ -7,12 +7,19 @@ interface LogoutModalProps {
   onConfirm: () => void;
 }
 
-export default function LogoutModal({
-  isOpen,
-  onClose,
-  onConfirm,
-}: LogoutModalProps) {
+export default function LogoutModal({ isOpen, onClose }: LogoutModalProps) {
   if (!isOpen) return null;
+
+  const handleLogout = async () => {
+    try {
+      await signoutUser();
+    } catch (error) {
+      console.error("Failed to sign out:", error);
+    } finally {
+      onClose();
+      window.location.href = "/login";
+    }
+  };
 
   return (
     <div className={styles.backdrop} onClick={onClose}>
@@ -32,7 +39,7 @@ export default function LogoutModal({
           <button
             type="button"
             className={styles.confirmBtn}
-            onClick={onConfirm}
+            onClick={handleLogout}
           >
             Log out
           </button>

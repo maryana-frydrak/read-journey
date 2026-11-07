@@ -1,0 +1,276 @@
+.container {
+  display: flex;
+  gap: 16px;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 20px 16px;
+  color: #f9f9f9;
+  background-color: #141414;
+  min-height: calc(100vh - 80px);
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 313px;
+  flex-shrink: 0;
+}
+
+.filtersWrapper {
+  background-color: #1f1f1f;
+  border-radius: 30px;
+  padding: 30px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.sectionTitle {
+  font-size: 14px;
+  font-weight: 500;
+  color: #f9f9f9;
+  line-height: 1.28;
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.label {
+  font-size: 12px;
+  color: rgba(249, 249, 249, 0.6);
+}
+
+.input {
+  width: 100%;
+  height: 48px;
+  background-color: #262626;
+  border: 1px solid rgba(249, 249, 249, 0.1);
+  border-radius: 12px;
+  padding: 0 16px;
+  color: #f9f9f9;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.input:focus {
+  border-color: #f9f9f9;
+}
+
+.input::placeholder {
+  color: rgba(249, 249, 249, 0.4);
+}
+
+.applyBtn {
+  margin-top: 4px;
+  height: 42px;
+  background-color: transparent;
+  border: 1px solid rgba(249, 249, 249, 0.2);
+  border-radius: 30px;
+  color: #f9f9f9;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.applyBtn:hover {
+  background-color: #f9f9f9;
+  color: #1f1f1f;
+  border-color: #f9f9f9;
+}
+
+.workoutBox {
+  background-color: #1f1f1f;
+  border-radius: 30px;
+  padding: 30px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.workoutTitle {
+  font-size: 18px;
+  font-weight: 700;
+  color: #f9f9f9;
+  margin-bottom: 6px;
+}
+
+.workoutList {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 0;
+  margin: 0;
+}
+
+.workoutItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.stepNumber {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background-color: #f9f9f9;
+  color: #1f1f1f;
+  border-radius: 50%;
+  font-weight: 700;
+  font-size: 16px;
+  flex-shrink: 0;
+}
+
+.stepText {
+  font-size: 14px;
+  line-height: 1.28;
+  color: rgba(249, 249, 249, 0.8);
+}
+
+.workoutLink {
+  margin-top: 10px;
+  font-size: 14px;
+  color: rgba(249, 249, 249, 0.6);
+  text-decoration: underline;
+  transition: color 0.2s;
+}
+
+.workoutLink:hover {
+  color: #f9f9f9;
+}
+
+.quoteBox {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 12px;
+  background-color: #262626;
+  padding: 14px;
+  border-radius: 12px;
+}
+
+.quoteIconWrapper {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.quoteIconWrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.quoteText {
+  font-size: 12px;
+  line-height: 1.4;
+  color: rgba(249, 249, 249, 0.6);
+  margin: 0;
+}
+
+.content {
+  flex-grow: 1;
+  background-color: #1f1f1f;
+  border-radius: 30px;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.headerTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #f9f9f9;
+}
+
+.paginationArrows {
+  display: flex;
+  gap: 8px;
+}
+
+.arrowBtn {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background-color: transparent;
+  border: 1px solid rgba(249, 249, 249, 0.2);
+  color: #f9f9f9;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.arrowBtn:hover:not(:disabled) {
+  border-color: #f9f9f9;
+}
+
+.arrowBtn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.booksGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+.bookCard {
+  display: flex;
+  flex-direction: column;
+  width: 137px;
+}
+
+.bookImage {
+  width: 100%;
+  height: 208px;
+  object-fit: cover;
+  border-radius: 8px;
+  background-color: #262626;
+}
+
+.bookTitle {
+  font-size: 14px;
+  font-weight: 700;
+  color: #f9f9f9;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0;
+}
+
+.bookAuthor {
+  font-size: 12px;
+  color: rgba(249, 249, 249, 0.6);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0;
+}
+
+.noBooks {
+  color: rgba(249, 249, 249, 0.5);
+  font-size: 14px;
+}
