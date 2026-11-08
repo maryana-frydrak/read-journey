@@ -2,6 +2,7 @@ import axios from "axios";
 
 export const instance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
+  withCredentials: true,
 });
 
 export const setAuthToken = (token: string) => {
@@ -66,6 +67,34 @@ export const signoutUser = async () => {
   clearAuthToken();
   return data;
 };
+
+instance.interceptors.response.use(
+  (response) => response,
+  async (error) => {
+    const originalRequest = error.config;
+
+    if (error.response?.status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true;
+
+      try {
+        const { data } = await instance.get("/users/current/refresh");
+        if (data.token) {
+          setAuthToken(data.token);
+          originalRequest.headers.Authorization = `Bearer ${data.token}`;
+          return instance(originalRequest);
+        }
+      } catch (refreshError) {
+        clearAuthToken();
+        if (typeof window !== "undefined") {
+          window.location.href = "/login";
+        }
+        return Promise.reject(refreshError);
+      }
+    }
+
+    return Promise.reject(error);
+  },
+);
 
 export const getRecommendedBooks = async () => {
   const { data } = await instance.get("/books/recommend");

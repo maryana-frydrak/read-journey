@@ -1,10 +1,10 @@
 .container {
   display: flex;
   gap: 16px;
-  max-width: 1280px;
+  min-width: 1216px;
   margin: 0 auto;
-  padding: 20px 16px;
-  color: #f9f9f9;
+  padding: 0 32px 27px;
+  color: #1f1f1f;
   background-color: #141414;
   min-height: calc(100vh - 80px);
 }
@@ -13,68 +13,89 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
-  width: 313px;
+  width: 353px;
   flex-shrink: 0;
+
+  border-radius: 30px;
+  background-color: #1f1f1f;
 }
 
 .filtersWrapper {
-  background-color: #1f1f1f;
-  border-radius: 30px;
-  padding: 30px 24px;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.sectionTitle {
-  font-size: 14px;
-  font-weight: 500;
-  color: #f9f9f9;
-  line-height: 1.28;
-}
-
-.inputGroup {
+  padding: 40px 20px 34px;
   display: flex;
   flex-direction: column;
   gap: 8px;
 }
 
-.label {
-  font-size: 12px;
-  color: rgba(249, 249, 249, 0.6);
+.sectionTitle {
+  font-weight: 500;
+  font-size: 14px;
+
+  line-height: 1.29;
+  letter-spacing: -0.02em;
+  color: #f9f9f9;
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: row;
+}
+
+.inputContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  height: 50px;
+  background-color: #262626;
+  border: none;
+  border-radius: 12px;
+  padding: 16px 14px;
+
+  white-space: nowrap;
+  font-weight: 500;
+  font-size: 14px;
+
+  line-height: 1.29;
+  letter-spacing: -0.02em;
+  color: #686868;
+  outline: none;
+}
+
+.inputContainer:hover,
+.inputContainer:focus {
+  border: 1px solid rgba(249, 249, 249, 0.1);
 }
 
 .input {
-  width: 100%;
-  height: 48px;
-  background-color: #262626;
-  border: 1px solid rgba(249, 249, 249, 0.1);
-  border-radius: 12px;
-  padding: 0 16px;
-  color: #f9f9f9;
-  font-size: 14px;
+  background: transparent;
+  border: none;
   outline: none;
-  transition: border-color 0.2s;
-}
+  width: 100%;
+  color: #f9f9f9;
 
-.input:focus {
-  border-color: #f9f9f9;
-}
+  font-weight: 500;
+  font-size: 14px;
 
-.input::placeholder {
-  color: rgba(249, 249, 249, 0.4);
+  line-height: 1.29;
+  letter-spacing: -0.02em;
 }
 
 .applyBtn {
-  margin-top: 4px;
-  height: 42px;
-  background-color: transparent;
+  margin-top: 12px;
   border: 1px solid rgba(249, 249, 249, 0.2);
   border-radius: 30px;
-  color: #f9f9f9;
-  font-size: 14px;
+  padding: 12px 28px;
+  width: 122px;
+  height: 42px;
+
   font-weight: 700;
-  cursor: pointer;
+  font-size: 16px;
+
+  line-height: 1.12;
+  letter-spacing: 0.02em;
+  color: #f9f9f9;
   transition: all 0.2s ease;
 }
 

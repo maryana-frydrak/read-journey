@@ -1,9 +1,14 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
-  cacheComponents: true,
-  partialPrefetching: true,
+  async rewrites() {
+    return [
+      {
+        source: "/api/:path*",
+        destination: "https://readjourney.b.goit.study/api/:path*",
+      },
+    ];
+  },
 };
 
 export default nextConfig;

@@ -40,25 +40,29 @@ export default function RecommendedPage() {
           <p className={styles.sectionTitle}>Filters:</p>
 
           <div className={styles.inputGroup}>
-            <label className={styles.label}>Book title:</label>
-            <input
-              type="text"
-              placeholder="Enter text"
-              value={titleFilter}
-              onChange={(e) => setTitleFilter(e.target.value)}
-              className={styles.input}
-            />
+            <div className={styles.inputContainer}>
+              <span className={styles.label}>Book title:</span>
+              <input
+                type="text"
+                placeholder=""
+                value={titleFilter}
+                onChange={(e) => setTitleFilter(e.target.value)}
+                className={styles.input}
+              />
+            </div>
           </div>
 
           <div className={styles.inputGroup}>
-            <label className={styles.label}>The author:</label>
-            <input
-              type="text"
-              placeholder="Enter text"
-              value={authorFilter}
-              onChange={(e) => setAuthorFilter(e.target.value)}
-              className={styles.input}
-            />
+            <div className={styles.inputContainer}>
+              <span className={styles.label}>The author:</span>
+              <input
+                type="text"
+                placeholder=""
+                value={authorFilter}
+                onChange={(e) => setAuthorFilter(e.target.value)}
+                className={styles.input}
+              />
+            </div>
           </div>
 
           <button type="submit" className={styles.applyBtn}>
