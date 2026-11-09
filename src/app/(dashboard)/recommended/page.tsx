@@ -70,28 +70,41 @@ export default function RecommendedPage() {
           </button>
         </form>
 
-        <div className={styles.workoutBox}>
-          <h3 className={styles.workoutTitle}>Start your workout</h3>
-          <ul className={styles.workoutList}>
-            <li className={styles.workoutItem}>
-              <span className={styles.stepNumber}>1</span>
-              <p className={styles.stepText}>
-                <strong>Create a personal library:</strong> add the books you
-                intend to read.
-              </p>
-            </li>
-            <li className={styles.workoutItem}>
-              <span className={styles.stepNumber}>2</span>
-              <p className={styles.stepText}>
-                <strong>Create your first workout:</strong> define a goal,
-                choose a period, start training.
-              </p>
-            </li>
-          </ul>
-
-          <Link href="/library" className={styles.workoutLink}>
-            My library &rarr;
-          </Link>
+        <div className={styles.workoutContainer}>
+          <div className={styles.workoutBox}>
+            <h3 className={styles.workoutTitle}>Start your workout</h3>
+            <ul className={styles.workoutList}>
+              <li className={styles.workoutItem}>
+                <span className={styles.stepNumber}>1</span>
+                <p className={styles.stepText}>
+                  Create a personal library:{" "}
+                  <span className={styles.accentText}>
+                    add
+                    <br /> the books you intend to read
+                    <br /> to it.
+                  </span>
+                </p>
+              </li>
+              <li className={styles.workoutItem}>
+                <span className={styles.stepNumber}>2</span>
+                <p className={styles.stepText}>
+                  Create your first workout:{" "}
+                  <span className={styles.accentText}>
+                    define <br />a goal, choose a period, start
+                    <br /> training.
+                  </span>
+                </p>
+              </li>
+            </ul>
+            <div className={styles.workoutLinkContainer}>
+              <Link href="/library" className={styles.workoutLink}>
+                My library
+              </Link>
+              <svg className="icon-up-right" width="24" height="24">
+                <use href="/icons.svg#icon-arrow-right" />
+              </svg>
+            </div>
+          </div>
         </div>
 
         <div className={styles.quoteBox}>

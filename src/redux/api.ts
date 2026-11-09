@@ -1,19 +1,24 @@
 import axios from "axios";
 
-export const instance = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL,
+const baseURL = process.env.NEXT_PUBLIC_API_URL;
+
+if (!baseURL) {
+  throw new Error("NEXT_PUBLIC_API_URL is not defined");
+}
+export const nextServer = axios.create({
+  baseURL: `${baseURL}`,
   withCredentials: true,
 });
 
 export const setAuthToken = (token: string) => {
-  instance.defaults.headers.common.Authorization = `Bearer ${token}`;
+  nextServer.defaults.headers.common.Authorization = `Bearer ${token}`;
   if (typeof window !== "undefined") {
     localStorage.setItem("token", token);
   }
 };
 
 export const clearAuthToken = () => {
-  delete instance.defaults.headers.common.Authorization;
+  delete nextServer.defaults.headers.common.Authorization;
   if (typeof window !== "undefined") {
     localStorage.removeItem("token");
   }
@@ -31,7 +36,7 @@ export const signupUser = async (userData: {
   email: string;
   password: string;
 }) => {
-  const { data } = await instance.post("/users/signup", userData);
+  const { data } = await nextServer.post("/users/signup", userData);
   if (data.token) {
     setAuthToken(data.token);
   }
@@ -42,7 +47,7 @@ export const signinUser = async (userData: {
   email: string;
   password: string;
 }) => {
-  const { data } = await instance.post("/users/signin", userData);
+  const { data } = await nextServer.post("/users/signin", userData);
   if (data.token) {
     setAuthToken(data.token);
   }
@@ -50,12 +55,12 @@ export const signinUser = async (userData: {
 };
 
 export const getCurrentUser = async () => {
-  const { data } = await instance.get("/users/current");
+  const { data } = await nextServer.get("/users/current");
   return data;
 };
 
 export const refreshCurrentUser = async () => {
-  const { data } = await instance.get("/users/current/refresh");
+  const { data } = await nextServer.get("/users/current/refresh");
   if (data.token) {
     setAuthToken(data.token);
   }
@@ -63,12 +68,12 @@ export const refreshCurrentUser = async () => {
 };
 
 export const signoutUser = async () => {
-  const { data } = await instance.post("/users/signout");
+  const { data } = await nextServer.post("/users/signout");
   clearAuthToken();
   return data;
 };
 
-instance.interceptors.response.use(
+nextServer.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
@@ -77,11 +82,11 @@ instance.interceptors.response.use(
       originalRequest._retry = true;
 
       try {
-        const { data } = await instance.get("/users/current/refresh");
+        const { data } = await nextServer.get("/users/current/refresh");
         if (data.token) {
           setAuthToken(data.token);
           originalRequest.headers.Authorization = `Bearer ${data.token}`;
-          return instance(originalRequest);
+          return nextServer(originalRequest);
         }
       } catch (refreshError) {
         clearAuthToken();
@@ -97,7 +102,7 @@ instance.interceptors.response.use(
 );
 
 export const getRecommendedBooks = async () => {
-  const { data } = await instance.get("/books/recommend");
+  const { data } = await nextServer.get("/books/recommend");
   return data;
 };
 
@@ -107,22 +112,22 @@ export const addBook = async (bookData: {
   year: number;
   pages: number;
 }) => {
-  const { data } = await instance.post("/books/add", bookData);
+  const { data } = await nextServer.post("/books/add", bookData);
   return data;
 };
 
 export const addBookFromRecommend = async (id: string) => {
-  const { data } = await instance.post(`/books/add/${id}`);
+  const { data } = await nextServer.post(`/books/add/${id}`);
   return data;
 };
 
 export const removeUserBook = async (id: string) => {
-  const { data } = await instance.delete(`/books/remove/${id}`);
+  const { data } = await nextServer.delete(`/books/remove/${id}`);
   return data;
 };
 
 export const getOwnBooks = async () => {
-  const { data } = await instance.get("/books/own");
+  const { data } = await nextServer.get("/books/own");
   return data;
 };
 
@@ -130,7 +135,7 @@ export const startReading = async (readingData: {
   id: string;
   page: number;
 }) => {
-  const { data } = await instance.post("/books/reading/start", readingData);
+  const { data } = await nextServer.post("/books/reading/start", readingData);
   return data;
 };
 
@@ -138,16 +143,16 @@ export const finishReading = async (readingData: {
   id: string;
   page: number;
 }) => {
-  const { data } = await instance.post("/books/reading/finish", readingData);
+  const { data } = await nextServer.post("/books/reading/finish", readingData);
   return data;
 };
 
 export const deleteReading = async (id: string) => {
-  const { data } = await instance.delete("/books/reading", { data: { id } });
+  const { data } = await nextServer.delete("/books/reading", { data: { id } });
   return data;
 };
 
 export const getBookById = async (id: string) => {
-  const { data } = await instance.get(`/books/${id}`);
+  const { data } = await nextServer.get(`/books/${id}`);
   return data;
 };

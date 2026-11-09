@@ -21,7 +21,7 @@
 }
 
 .filtersWrapper {
-  padding: 40px 20px 34px;
+  padding: 40px 20px 0;
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -86,7 +86,7 @@
   margin-top: 12px;
   border: 1px solid rgba(249, 249, 249, 0.2);
   border-radius: 30px;
-  padding: 12px 28px;
+  padding: 12px 24px;
   width: 122px;
   height: 42px;
 
@@ -102,23 +102,35 @@
 .applyBtn:hover {
   background-color: #f9f9f9;
   color: #1f1f1f;
-  border-color: #f9f9f9;
+  border: none;
+}
+
+.workoutContainer {
+  padding: 0 20px;
+  display: flex;
+  flex-direction: column;
 }
 
 .workoutBox {
-  background-color: #1f1f1f;
-  border-radius: 30px;
-  padding: 30px 24px;
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
+  border-radius: 12px;
+  width: 313px;
+  height: 272px;
+
+  background-color: #262626;
+
+  padding: 20px;
 }
 
 .workoutTitle {
-  font-size: 18px;
   font-weight: 700;
+  font-size: 20px;
+
+  line-height: 1;
+  letter-spacing: -0.02em;
+  text-align: left;
   color: #f9f9f9;
-  margin-bottom: 6px;
+
+  margin-bottom: 40px;
 }
 
 .workoutList {
@@ -126,46 +138,101 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
-  padding: 0;
-  margin: 0;
 }
 
 .workoutItem {
   display: flex;
   align-items: flex-start;
-  gap: 12px;
+  gap: 10px;
 }
 
 .stepNumber {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   background-color: #f9f9f9;
-  color: #1f1f1f;
   border-radius: 50%;
+
   font-weight: 700;
-  font-size: 16px;
+  font-size: 20px;
+
+  line-height: 1;
+  letter-spacing: -0.02em;
+  text-align: center;
+  color: #1f1f1f;
+
   flex-shrink: 0;
 }
 
 .stepText {
+  font-weight: 500;
   font-size: 14px;
-  line-height: 1.28;
-  color: rgba(249, 249, 249, 0.8);
+
+  line-height: 1.29;
+  letter-spacing: -0.02em;
+  color: #f9f9f9;
+}
+
+.accentText {
+  color: #686868;
+}
+
+.workoutLinkContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  margin-top: 26px;
 }
 
 .workoutLink {
-  margin-top: 10px;
+  font-weight: 400;
   font-size: 14px;
-  color: rgba(249, 249, 249, 0.6);
-  text-decoration: underline;
+
+  line-height: 1.29;
+  letter-spacing: -0.02em;
+  /* text-decoration: underline; */
+  /* text-decoration-skip-ink: none; */
+  color: #686868;
+
+  position: relative;
+  display: inline-block;
+  text-decoration: none;
+  border-bottom: 1px solid #686868;
+  padding-bottom: 1px;
+
   transition: color 0.2s;
 }
 
-.workoutLink:hover {
+.workoutLink::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 2px;
+  background-color: #686868;
+}
+
+.workoutLink:hover,
+.workoutLink:focus {
   color: #f9f9f9;
+}
+
+.workoutLink .icon-arrow-right {
+  display: block;
+  width: 24px;
+  height: 24px;
+  fill: #fbfbfb;
+  transition: transform 0.3 ease;
+}
+
+.workoutLink:hover .icon-arrow-right,
+.workoutLink:focus .icon-arrow-right {
+  fill: var(--color-primary);
+  transform: rotate(53deg);
 }
 
 .quoteBox {
