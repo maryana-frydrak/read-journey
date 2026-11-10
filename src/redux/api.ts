@@ -10,10 +10,13 @@ export const nextServer = axios.create({
   withCredentials: true,
 });
 
-export const setAuthToken = (token: string) => {
-  nextServer.defaults.headers.common.Authorization = `Bearer ${token}`;
-  if (typeof window !== "undefined") {
+export const setAuthToken = (token: string | null) => {
+  if (token) {
     localStorage.setItem("token", token);
+    nextServer.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+  } else {
+    localStorage.removeItem("token");
+    delete nextServer.defaults.headers.common["Authorization"];
   }
 };
 

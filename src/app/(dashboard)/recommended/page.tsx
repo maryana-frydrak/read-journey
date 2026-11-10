@@ -100,7 +100,7 @@ export default function RecommendedPage() {
               <Link href="/library" className={styles.workoutLink}>
                 My library
               </Link>
-              <svg className="icon-up-right" width="24" height="24">
+              <svg className={styles.iconUpRight} width="24" height="24">
                 <use href="/icons.svg#icon-arrow-right" />
               </svg>
             </div>
@@ -117,8 +117,8 @@ export default function RecommendedPage() {
             />
           </div>
           <p className={styles.quoteText}>
-            Books are windows to the world, and reading is a journey into the
-            unknown.
+            "Books are <span className={styles.highLight}> windows </span> to
+            the world, and reading is a journey into the unknown."
           </p>
         </div>
       </aside>

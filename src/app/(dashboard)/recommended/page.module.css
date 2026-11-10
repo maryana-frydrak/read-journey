@@ -114,7 +114,7 @@
 .workoutBox {
   border-radius: 12px;
   width: 313px;
-  height: 272px;
+  height: auto;
 
   background-color: #262626;
 
@@ -188,32 +188,16 @@
 }
 
 .workoutLink {
-  font-weight: 400;
+  font-weight: 500;
   font-size: 14px;
 
   line-height: 1.29;
   letter-spacing: -0.02em;
-  /* text-decoration: underline; */
-  /* text-decoration-skip-ink: none; */
+  text-decoration: underline;
+  text-decoration-skip-ink: none;
   color: #686868;
 
-  position: relative;
-  display: inline-block;
-  text-decoration: none;
-  border-bottom: 1px solid #686868;
-  padding-bottom: 1px;
-
-  transition: color 0.2s;
-}
-
-.workoutLink::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  height: 2px;
-  background-color: #686868;
+  transition: color 0.2s ease;
 }
 
 .workoutLink:hover,
@@ -221,28 +205,34 @@
   color: #f9f9f9;
 }
 
-.workoutLink .icon-arrow-right {
+.workoutLinkContainer .iconUpRight {
   display: block;
   width: 24px;
   height: 24px;
-  fill: #fbfbfb;
-  transition: transform 0.3 ease;
+  stroke: #fbfbfb;
+  transition:
+    stroke 0.3s ease,
+    transform 0.3s ease;
 }
 
-.workoutLink:hover .icon-arrow-right,
-.workoutLink:focus .icon-arrow-right {
-  fill: var(--color-primary);
-  transform: rotate(53deg);
+.workoutLinkContainer:hover .iconUpRight,
+.workoutLinkContainer:focus .iconUpRight {
+  stroke: #686868;
+  transform: rotate(-45deg) translateY(-2px);
 }
 
 .quoteBox {
   display: flex;
   align-items: center;
-  gap: 12px;
-  margin-top: 12px;
-  background-color: #262626;
-  padding: 14px;
+  gap: 14px;
+  margin-left: 20px;
+
   border-radius: 12px;
+  width: 313px;
+  height: auto;
+
+  background-color: #262626;
+  padding: 15px 20px;
 }
 
 .quoteIconWrapper {
@@ -261,10 +251,17 @@
 }
 
 .quoteText {
-  font-size: 12px;
-  line-height: 1.4;
-  color: rgba(249, 249, 249, 0.6);
+  font-weight: 500;
+  font-size: 14px;
+
+  line-height: 1.29;
+  letter-spacing: -0.02em;
+  color: #686868;
   margin: 0;
+}
+
+.highLight {
+  color: #f9f9f9;
 }
 
 .content {
