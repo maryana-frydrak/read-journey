@@ -129,9 +129,15 @@ export default function RecommendedPage() {
 
           <div className={styles.paginationArrows}>
             <button className={styles.arrowBtn} disabled>
-              &lt;
+              <svg width="20" height="20" className={styles.arrowIcon}>
+                <use href="/icons.svg#icon-chevron-right" />
+              </svg>
             </button>
-            <button className={styles.arrowBtn}>&gt;</button>
+            <button className={styles.arrowBtn}>
+              <svg width="20" height="20" className={styles.arrowIcon}>
+                <use href="/icons.svg#icon-chevron-left" />
+              </svg>
+            </button>
           </div>
         </div>
 
@@ -151,7 +157,7 @@ export default function RecommendedPage() {
               </div>
             ))
           ) : (
-            <p className={styles.noBooks}>Loading books...</p>
+            <p className={styles.noBooks}>No books found</p>
           )}
         </div>
       </main>

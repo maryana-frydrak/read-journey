@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import AuthProvider from "@/components/AuthProvider/AuthProvider";
+import "react-toastify/dist/ReactToastify.css";
+import ToastProvider from "@/components/ToastProvider/ToastProvider";
 
 export const metadata: Metadata = {
   title: "Read Journey",
@@ -16,6 +18,7 @@ export default function RootLayout({
     <html lang="uk">
       <body>
         <AuthProvider>{children}</AuthProvider>
+        <ToastProvider />
       </body>
     </html>
   );

@@ -8,6 +8,8 @@ import * as Yup from "yup";
 import { registerSchema } from "@/utils/authValidation";
 import { useRouter } from "next/navigation";
 import { signupUser } from "@/redux/api";
+import { toast } from "react-toastify";
+import { AxiosError } from "axios";
 import styles from "./RegisterForm.module.css";
 
 type FormData = Yup.InferType<typeof registerSchema>;
@@ -29,8 +31,22 @@ export default function RegisterForm() {
     try {
       await signupUser(data);
       router.push("/recommended");
-    } catch (error) {
+    } catch (error: unknown) {
       console.error("Registration failed:", error);
+
+      if (error instanceof AxiosError) {
+        const serverMessage = error.response?.data?.message;
+
+        if (error.response?.status === 409) {
+          toast.error("This email is already registered. Please sign in.");
+        } else {
+          toast.error(
+            serverMessage || "Something went wrong. Please try again.",
+          );
+        }
+      } else {
+        toast.error("Something went wrong. Please try again.");
+      }
     }
   };
 

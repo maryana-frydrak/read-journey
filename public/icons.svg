@@ -45,5 +45,11 @@
 <symbol id="icon-arrow-right" viewBox="0 0 32 32">
 <path fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 16h20M18 8l8 8-8 8" />
 </symbol>
+<symbol id="icon-chevron-right" viewBox="0 0 32 32">
+<path stroke-linejoin="round" stroke-linecap="round" stroke-miterlimit="4" stroke-width="2.4" d="M20 24l-8-8 8-8"></path>
+</symbol>
+<symbol id="icon-chevron-left" viewBox="0 0 32 32">
+<path stroke-linejoin="round" stroke-linecap="round" stroke-miterlimit="4" stroke-width="2.4" d="M12 8l8 8-8 8"></path>
+</symbol>
 </defs>
 </svg>

@@ -8,6 +8,8 @@ import * as Yup from "yup";
 import { loginSchema } from "@/utils/authValidation";
 import { useRouter } from "next/navigation";
 import { signinUser } from "@/redux/api";
+import { toast } from "react-toastify";
+import { AxiosError } from "axios";
 import styles from "./LoginForm.module.css";
 
 type FormData = Yup.InferType<typeof loginSchema>;
@@ -29,8 +31,22 @@ export default function LoginForm() {
     try {
       await signinUser(data);
       router.push("/recommended");
-    } catch (error) {
+    } catch (error: unknown) {
       console.error("Login failed:", error);
+
+      if (error instanceof AxiosError) {
+        const serverMessage = error.response?.data?.message;
+
+        if (error.response?.status === 401) {
+          toast.error("Invalid email or password.");
+        } else {
+          toast.error(
+            serverMessage || "Something went wrong. Please try again.",
+          );
+        }
+      } else {
+        toast.error("Something went wrong. Please try again.");
+      }
     }
   };
 
