@@ -104,8 +104,10 @@ nextServer.interceptors.response.use(
   },
 );
 
-export const getRecommendedBooks = async () => {
-  const { data } = await nextServer.get("/books/recommend");
+export const getRecommendedBooks = async (page = 1, limit = 10) => {
+  const { data } = await nextServer.get("/books/recommend", {
+    params: { page, limit },
+  });
   return data;
 };
 

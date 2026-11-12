@@ -12,11 +12,24 @@ export default function RecommendedPage() {
   const [authorFilter, setAuthorFilter] = useState("");
   const [isLoading, setIsLoading] = useState(true);
 
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const limit = 10;
+
   useEffect(() => {
     const fetchBooks = async () => {
       try {
-        const data = await getRecommendedBooks();
-        setBooks(Array.isArray(data) ? data : data.results || []);
+        setIsLoading(true);
+
+        const data = await getRecommendedBooks(page, limit);
+
+        // setBooks(Array.isArray(data) ? data : data.results || []);
+
+        setBooks([]);
+
+        if (data.totalPages) {
+          setTotalPages(data.totalPages);
+        }
       } catch (error) {
         console.error("Failed to fetch recommended books:", error);
       } finally {
@@ -25,7 +38,7 @@ export default function RecommendedPage() {
     };
 
     fetchBooks();
-  }, []);
+  }, [page]);
 
   const handleApplyFilters = (e: React.FormEvent) => {
     e.preventDefault();
@@ -128,12 +141,20 @@ export default function RecommendedPage() {
           <h2 className={styles.title}>Recommended</h2>
 
           <div className={styles.paginationArrows}>
-            <button className={styles.arrowBtn} disabled>
+            <button
+              className={styles.arrowBtn}
+              onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
+              disabled={page === 1 || isLoading}
+            >
               <svg width="20" height="20" className={styles.arrowIcon}>
                 <use href="/icons.svg#icon-chevron-right" />
               </svg>
             </button>
-            <button className={styles.arrowBtn}>
+            <button
+              className={styles.arrowBtn}
+              onClick={() => setPage((prev) => prev + 1)}
+              disabled={page >= totalPages || isLoading}
+            >
               <svg width="20" height="20" className={styles.arrowIcon}>
                 <use href="/icons.svg#icon-chevron-left" />
               </svg>
