@@ -5,4 +5,6 @@ export interface Book {
   author: string;
   imageUrl: string;
   recommend?: boolean;
+  totalPages?: number;
+  pages?: number;
 }

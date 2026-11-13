@@ -43,6 +43,10 @@ export const signupUser = async (userData: {
   if (data.token) {
     setAuthToken(data.token);
   }
+
+  if (data.refreshToken) {
+    localStorage.setItem("refreshToken", data.refreshToken);
+  }
   return data;
 };
 
@@ -54,6 +58,10 @@ export const signinUser = async (userData: {
   if (data.token) {
     setAuthToken(data.token);
   }
+
+  if (data.refreshToken) {
+    localStorage.setItem("refreshToken", data.refreshToken);
+  }
   return data;
 };
 
@@ -63,9 +71,21 @@ export const getCurrentUser = async () => {
 };
 
 export const refreshCurrentUser = async () => {
-  const { data } = await nextServer.get("/users/current/refresh");
+  const refreshToken =
+    typeof window !== "undefined" ? localStorage.getItem("refreshToken") : null;
+
+  const { data } = await nextServer.get("/users/current/refresh", {
+    headers: {
+      Authorization: `Bearer ${refreshToken}`,
+    },
+  });
+
   if (data.token) {
     setAuthToken(data.token);
+  }
+
+  if (data.refreshToken) {
+    localStorage.setItem("refreshToken", data.refreshToken);
   }
   return data;
 };
@@ -75,34 +95,6 @@ export const signoutUser = async () => {
   clearAuthToken();
   return data;
 };
-
-nextServer.interceptors.response.use(
-  (response) => response,
-  async (error) => {
-    const originalRequest = error.config;
-
-    if (error.response?.status === 401 && !originalRequest._retry) {
-      originalRequest._retry = true;
-
-      try {
-        const { data } = await nextServer.get("/users/current/refresh");
-        if (data.token) {
-          setAuthToken(data.token);
-          originalRequest.headers.Authorization = `Bearer ${data.token}`;
-          return nextServer(originalRequest);
-        }
-      } catch (refreshError) {
-        clearAuthToken();
-        if (typeof window !== "undefined") {
-          window.location.href = "/login";
-        }
-        return Promise.reject(refreshError);
-      }
-    }
-
-    return Promise.reject(error);
-  },
-);
 
 export const getRecommendedBooks = async (page = 1, limit = 10) => {
   const { data } = await nextServer.get("/books/recommend", {
@@ -161,3 +153,31 @@ export const getBookById = async (id: string) => {
   const { data } = await nextServer.get(`/books/${id}`);
   return data;
 };
+
+nextServer.interceptors.response.use(
+  (response) => response,
+  async (error) => {
+    const originalRequest = error.config;
+
+    if (error.response?.status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true;
+
+      try {
+        const data = await refreshCurrentUser();
+
+        if (data.token) {
+          originalRequest.headers.Authorization = `Bearer ${data.token}`;
+          return nextServer(originalRequest);
+        }
+      } catch (refreshError) {
+        clearAuthToken();
+        if (typeof window !== "undefined") {
+          window.location.href = "/login";
+        }
+        return Promise.reject(refreshError);
+      }
+    }
+
+    return Promise.reject(error);
+  },
+);

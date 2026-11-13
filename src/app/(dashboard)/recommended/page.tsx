@@ -2,15 +2,19 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { getRecommendedBooks } from "@/redux/api";
+import { addBookFromRecommend, getRecommendedBooks } from "@/redux/api";
 import { Book } from "@/types";
 import styles from "./page.module.css";
+import BookModal from "@/components/Modals/BookModal/BookModal";
+import Loader from "@/components/Loader/Loader";
 
 export default function RecommendedPage() {
   const [books, setBooks] = useState<Book[]>([]);
   const [titleFilter, setTitleFilter] = useState("");
   const [authorFilter, setAuthorFilter] = useState("");
   const [isLoading, setIsLoading] = useState(true);
+  const [selectedBook, setSelectedBook] = useState<Book | null>(null);
+  const [isAdding, setIsAdding] = useState(false);
 
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
@@ -20,13 +24,8 @@ export default function RecommendedPage() {
     const fetchBooks = async () => {
       try {
         setIsLoading(true);
-
         const data = await getRecommendedBooks(page, limit);
-
-        // setBooks(Array.isArray(data) ? data : data.results || []);
-
-        setBooks([]);
-
+        setBooks(Array.isArray(data) ? data : data.results || []);
         if (data.totalPages) {
           setTotalPages(data.totalPages);
         }
@@ -36,7 +35,6 @@ export default function RecommendedPage() {
         setIsLoading(false);
       }
     };
-
     fetchBooks();
   }, [page]);
 
@@ -44,6 +42,24 @@ export default function RecommendedPage() {
     e.preventDefault();
     // Тут згодом додамо логіку фільтрації або запиту з параметрами
     console.log("Filter by title:", titleFilter, "author:", authorFilter);
+  };
+
+  function formatTitle(text: string) {
+    if (!text) return "";
+    return text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
+  }
+
+  const handleAddToLibrary = async (bookId: string) => {
+    try {
+      setIsAdding(true);
+      await addBookFromRecommend(bookId);
+      setSelectedBook(null);
+      // Тут можна додати виклик тосту або відкрити попап успіху "Good job"
+    } catch (error) {
+      console.error("Failed to add book:", error);
+    } finally {
+      setIsAdding(false);
+    }
   };
 
   return (
@@ -164,16 +180,20 @@ export default function RecommendedPage() {
 
         <div className={styles.booksGrid}>
           {isLoading ? (
-            <p className={styles.noBooks}>Loading...</p>
+            <Loader />
           ) : books.length > 0 ? (
             books.map((book: Book) => (
-              <div key={book._id || book.id} className={styles.bookCard}>
+              <div
+                key={book._id || book.id}
+                className={styles.bookCard}
+                onClick={() => setSelectedBook(book)}
+              >
                 <img
                   src={book.imageUrl}
                   alt={book.title}
                   className={styles.bookImage}
                 />
-                <h4 className={styles.bookTitle}>{book.title}</h4>
+                <h4 className={styles.bookTitle}>{formatTitle(book.title)}</h4>
                 <p className={styles.bookAuthor}>{book.author}</p>
               </div>
             ))
@@ -182,6 +202,15 @@ export default function RecommendedPage() {
           )}
         </div>
       </main>
+
+      {selectedBook && (
+        <BookModal
+          book={selectedBook}
+          onClose={() => setSelectedBook(null)}
+          onAddToLibrary={handleAddToLibrary}
+          isAdding={isAdding}
+        />
+      )}
     </div>
   );
 }

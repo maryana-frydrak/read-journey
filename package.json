@@ -16,6 +16,7 @@
     "react-dom": "19.3.0",
     "react-hook-form": "^7.90.0",
     "react-hot-toast": "^2.6.1",
+    "react-spinners": "^0.17.1",
     "react-toastify": "^11.1.0",
     "yup": "^1.7.1"
   },
