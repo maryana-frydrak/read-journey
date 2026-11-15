@@ -1,7 +1,7 @@
 .container {
   display: flex;
   gap: 16px;
-  min-width: 1216px;
+  min-width: 1280px;
   margin: 0 auto;
   padding: 0 32px 27px;
   color: #1f1f1f;
@@ -101,7 +101,8 @@
   transition: all 0.2s ease;
 }
 
-.applyBtn:hover {
+.applyBtn:hover,
+.applyBtn:focus {
   background-color: #f9f9f9;
   color: #1f1f1f;
   border: none;
@@ -181,15 +182,13 @@
   color: #686868;
 }
 
-.workoutLinkContainer {
+.workoutLink {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 
   margin-top: 26px;
-}
 
-.workoutLink {
   font-weight: 500;
   font-size: 14px;
 
@@ -207,7 +206,7 @@
   color: #f9f9f9;
 }
 
-.workoutLinkContainer .iconUpRight {
+.workoutLink .iconUpRight {
   display: block;
   width: 24px;
   height: 24px;
@@ -217,8 +216,8 @@
     transform 0.3s ease;
 }
 
-.workoutLinkContainer:hover .iconUpRight,
-.workoutLinkContainer:focus .iconUpRight {
+.workoutLink:hover .iconUpRight,
+.workoutLink:focus .iconUpRight {
   stroke: #686868;
   transform: rotate(-45deg) translateY(-2px);
 }

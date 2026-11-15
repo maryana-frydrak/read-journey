@@ -7,4 +7,5 @@ export interface Book {
   recommend?: boolean;
   totalPages?: number;
   pages?: number;
+  status?: "unread" | "in-progress" | "done";
 }

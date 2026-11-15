@@ -125,14 +125,12 @@ export default function RecommendedPage() {
                 </p>
               </li>
             </ul>
-            <div className={styles.workoutLinkContainer}>
-              <Link href="/library" className={styles.workoutLink}>
-                My library
-              </Link>
+            <Link href="/library" className={styles.workoutLink}>
+              My library
               <svg className={styles.iconUpRight} width="24" height="24">
                 <use href="/icons.svg#icon-arrow-right" />
               </svg>
-            </div>
+            </Link>
           </div>
         </div>
 
