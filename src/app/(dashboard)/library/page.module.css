@@ -237,54 +237,121 @@
 
 .selectWrapper {
   position: relative;
-  display: inline-block;
+  width: 153px;
 }
 
-.filterSelect {
-  background-color: #1f1f1f;
+.selectTrigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  width: 100%;
+  height: 46px;
+  padding: 14px;
+  background-color: transparent;
   border: 1px solid #3e3e3e;
   border-radius: 12px;
 
-  padding: 14px;
   font-weight: 500;
   font-size: 14px;
 
   line-height: 1.29;
   letter-spacing: -0.02em;
-  text-align: left;
   color: #f9f9f9;
 
-  outline: none;
   cursor: pointer;
-  width: 153px;
-  height: 46px;
-
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  background-color: transparent;
+  outline: none;
+  transition: border-color 0.2s ease;
 }
 
-.filterSelect option {
-  background-color: #1f1f1f;
-  color: #f9f9f9;
-  padding: 10px;
+.selectTrigger:hover,
+.selectTrigger:focus {
+  border-color: rgba(249, 249, 249, 0.4);
 }
 
 .selectIcon {
-  position: absolute;
-  right: 14px;
-  top: 50%;
-  transform: translateY(-50%);
-  pointer-events: none;
-  transition: transform 0.3s ease;
-
   stroke-width: 1.5px;
   stroke: #f9f9f9;
+  fill: none;
+  transition: transform 0.3s ease;
+  flex-shrink: 0;
 }
 
 .selectOpen {
-  transform: translateY(-50%) rotate(180deg);
+  transform: rotate(180deg);
+}
+
+.dropdownMenu {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  width: 100%;
+  padding: 14px;
+  background-color: #262626;
+  border-radius: 12px;
+  list-style: none;
+
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+
+  z-index: 999;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.dropdownItem {
+  font-weight: 500;
+  font-size: 14px;
+
+  line-height: 1.29;
+  letter-spacing: -0.02em;
+  color: #686868;
+
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.dropdownItem:hover,
+.dropdownItem:focus,
+.activeItem {
+  color: #f9f9f9;
+}
+
+.emptyContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 1;
+  margin: auto;
+  text-align: center;
+  padding: 40px;
+  min-height: 650px;
+}
+
+.emptyIconWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background-color: #262626;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.noBooks {
+  font-weight: 500;
+  font-size: 14px;
+
+  line-height: 1.29;
+  letter-spacing: -0.02em;
+  color: #f9f9f9;
+}
+
+.accentText {
+  color: #686868;
 }
 
 /* .emptyContainer {

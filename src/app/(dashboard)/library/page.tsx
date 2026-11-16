@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { getOwnBooks, getRecommendedBooks, removeUserBook } from "@/redux/api";
 import { Book } from "@/types";
 import styles from "./page.module.css";
@@ -11,10 +11,12 @@ export default function LibraryPage() {
   const [books, setBooks] = useState<Book[]>([]);
   const [recommended, setRecommended] = useState<Book[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [titleFilter, setTitleFilter] = useState("");
+  const [bookTitle, setBookTitle] = useState("");
+  const [statusFilter, setStatusFilter] = useState("all");
   const [authorFilter, setAuthorFilter] = useState("");
   const [totalPages, setTotalPages] = useState("");
   const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -45,10 +47,10 @@ export default function LibraryPage() {
     return text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
   }
 
-  const filteredBooks = books.filter((book: any) => {
-    if (titleFilter === "unread") return book.status === "unread";
-    if (titleFilter === "in-progress") return book.status === "in-progress";
-    if (titleFilter === "done") return book.status === "done";
+  const filteredBooks = books.filter((book: Book) => {
+    if (statusFilter === "unread") return book.status === "unread";
+    if (statusFilter === "in-progress") return book.status === "in-progress";
+    if (statusFilter === "done") return book.status === "done";
     return true;
   });
 
@@ -76,8 +78,8 @@ export default function LibraryPage() {
               <input
                 type="text"
                 placeholder=""
-                value={titleFilter}
-                onChange={(e) => setTitleFilter(e.target.value)}
+                value={bookTitle}
+                onChange={(e) => setBookTitle(e.target.value)}
                 className={styles.input}
               />
             </div>
@@ -146,29 +148,53 @@ export default function LibraryPage() {
         <div className={styles.headerTop}>
           <h2 className={styles.libraryTitle}>My library</h2>
 
-          <div className={styles.selectWrapper}>
-            <select
-              className={styles.filterSelect}
-              value={titleFilter}
-              onChange={(e) => {
-                setTitleFilter(e.target.value);
-                setIsOpen(false);
-              }}
+          <div className={styles.selectWrapper} ref={dropdownRef}>
+            <button
+              type="button"
+              className={styles.selectTrigger}
               onClick={() => setIsOpen((prev) => !prev)}
-              onBlur={() => setIsOpen(false)}
             >
-              <option value="unread">Unread</option>
-              <option value="in-progress">In progress</option>
-              <option value="done">Done</option>
-              <option value="all">All books</option>
-            </select>
-            <svg
-              className={`${styles.selectIcon} ${isOpen ? styles.iconOpen : ""}`}
-              width="16"
-              height="16"
-            >
-              <use href="/icons.svg#icon-chevron-down" />
-            </svg>
+              <span>
+                {statusFilter === "unread"
+                  ? "Unread"
+                  : statusFilter === "in-progress"
+                    ? "In progress"
+                    : statusFilter === "done"
+                      ? "Done"
+                      : "All books"}
+              </span>
+              <svg
+                className={`${styles.selectIcon} ${isOpen ? styles.selectOpen : ""}`}
+                width="16"
+                height="16"
+              >
+                <use href="/icons.svg#icon-chevron-down" />
+              </svg>
+            </button>
+
+            {isOpen && (
+              <ul className={styles.dropdownMenu}>
+                {[
+                  { value: "unread", label: "Unread" },
+                  { value: "in-progress", label: "In progress" },
+                  { value: "done", label: "Done" },
+                  { value: "all", label: "All books" },
+                ].map((option) => (
+                  <li
+                    key={option.value}
+                    className={`${styles.dropdownItem} ${
+                      statusFilter === option.value ? styles.activeItem : ""
+                    }`}
+                    onClick={() => {
+                      setStatusFilter(option.value);
+                      setIsOpen(false);
+                    }}
+                  >
+                    {option.label}
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
         </div>
 
@@ -208,15 +234,18 @@ export default function LibraryPage() {
               <div className={styles.emptyContainer}>
                 <div className={styles.emptyIconWrapper}>
                   <img
-                    src="/images/books-illustration.png"
+                    src="/images/books.jpg"
                     alt="Books"
                     className={styles.emptyImage}
                   />
                 </div>
                 <p className={styles.noBooks}>
                   To start training, add
-                  <span className={styles.accentText}>some of your books</span>
-                  or from the recommended ones
+                  <span className={styles.accentText}>
+                    {" "}
+                    some of your books{" "}
+                  </span>
+                  or <br /> from the recommended ones
                 </p>
               </div>
             )}
