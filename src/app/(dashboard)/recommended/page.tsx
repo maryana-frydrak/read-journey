@@ -38,10 +38,26 @@ export default function RecommendedPage() {
     fetchBooks();
   }, [page]);
 
-  const handleApplyFilters = (e: React.FormEvent) => {
+  const handleApplyFilters = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Тут згодом додамо логіку фільтрації або запиту з параметрами
-    console.log("Filter by title:", titleFilter, "author:", authorFilter);
+    try {
+      setIsLoading(true);
+      setPage(1);
+      const data = await getRecommendedBooks(
+        1,
+        limit,
+        titleFilter,
+        authorFilter,
+      );
+      setBooks(Array.isArray(data) ? data : data.results || []);
+      if (data.totalPages) {
+        setTotalPages(data.totalPages);
+      }
+    } catch (error) {
+      console.error("Failed to filter recommended books:", error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   function formatTitle(text: string) {

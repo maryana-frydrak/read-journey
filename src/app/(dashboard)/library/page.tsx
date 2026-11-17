@@ -1,7 +1,12 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { getOwnBooks, getRecommendedBooks, removeUserBook } from "@/redux/api";
+import {
+  addBook,
+  getOwnBooks,
+  getRecommendedBooks,
+  removeUserBook,
+} from "@/redux/api";
 import { Book } from "@/types";
 import styles from "./page.module.css";
 import Loader from "@/components/Loader/Loader";
@@ -13,7 +18,7 @@ export default function LibraryPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [bookTitle, setBookTitle] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
-  const [authorFilter, setAuthorFilter] = useState("");
+  const [author, setAuthor] = useState("");
   const [totalPages, setTotalPages] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -54,6 +59,28 @@ export default function LibraryPage() {
     return true;
   });
 
+  const handleCreateBook = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!bookTitle || !author || !totalPages) return;
+
+    try {
+      const newBook = {
+        title: bookTitle,
+        author: author,
+        totalPages: Number(totalPages),
+      };
+
+      const data = await addBook(newBook);
+      setBooks((prev) => [...prev, data.book || data]);
+
+      setBookTitle("");
+      setAuthor("");
+      setTotalPages("");
+    } catch (error) {
+      console.error("Failed to add book:", error);
+    }
+  };
+
   const handleDelete = async (bookId: string) => {
     try {
       await removeUserBook(bookId);
@@ -69,7 +96,7 @@ export default function LibraryPage() {
   return (
     <div className={styles.container}>
       <aside className={styles.sidebar}>
-        <form className={styles.filtersWrapper}>
+        <form onSubmit={handleCreateBook} className={styles.filtersWrapper}>
           <p className={styles.sectionTitle}>Create your library:</p>
 
           <div className={styles.inputGroup}>
@@ -91,8 +118,8 @@ export default function LibraryPage() {
               <input
                 type="text"
                 placeholder=""
-                value={authorFilter}
-                onChange={(e) => setAuthorFilter(e.target.value)}
+                value={author}
+                onChange={(e) => setAuthor(e.target.value)}
                 className={styles.input}
               />
             </div>
@@ -206,7 +233,7 @@ export default function LibraryPage() {
               filteredBooks.map((book: Book) => (
                 <div key={book._id || book.id} className={styles.bookCard}>
                   <img
-                    src={book.imageUrl}
+                    src={book.imageUrl || "/images/unsplash.jpg"}
                     alt={book.title}
                     className={styles.bookImage}
                   />

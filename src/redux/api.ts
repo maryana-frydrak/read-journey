@@ -96,9 +96,18 @@ export const signoutUser = async () => {
   return data;
 };
 
-export const getRecommendedBooks = async (page = 1, limit = 10) => {
+export const getRecommendedBooks = async (
+  page = 1,
+  limit = 10,
+  title = "",
+  author = "",
+) => {
+  const params: Record<string, string | number> = { page, limit };
+  if (title) params.title = title;
+  if (author) params.author = author;
+
   const { data } = await nextServer.get("/books/recommend", {
-    params: { page, limit },
+    params,
   });
   return data;
 };
@@ -106,8 +115,7 @@ export const getRecommendedBooks = async (page = 1, limit = 10) => {
 export const addBook = async (bookData: {
   title: string;
   author: string;
-  year: number;
-  pages: number;
+  totalPages: number;
 }) => {
   const { data } = await nextServer.post("/books/add", bookData);
   return data;
