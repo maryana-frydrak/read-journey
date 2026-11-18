@@ -167,6 +167,13 @@ nextServer.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
 
+    if (
+      originalRequest.url?.includes("/users/current/refresh") ||
+      originalRequest.url?.includes("/users/signin")
+    ) {
+      return Promise.reject(error);
+    }
+
     const token =
       typeof window !== "undefined" ? localStorage.getItem("token") : null;
     if (!token) {
@@ -186,6 +193,7 @@ nextServer.interceptors.response.use(
       } catch (refreshError) {
         clearAuthToken();
         if (typeof window !== "undefined") {
+          localStorage.removeItem("refreshToken");
           window.location.href = "/login";
         }
         return Promise.reject(refreshError);

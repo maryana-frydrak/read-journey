@@ -11,6 +11,7 @@ import { Book } from "@/types";
 import styles from "./page.module.css";
 import Loader from "@/components/Loader/Loader";
 import Link from "next/link";
+import AddBookSuccessModal from "@/components/Modals/AddBookSuccessModal/AddBookSuccessModal";
 
 export default function LibraryPage() {
   const [books, setBooks] = useState<Book[]>([]);
@@ -22,6 +23,8 @@ export default function LibraryPage() {
   const [totalPages, setTotalPages] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const [isAddBookSuccessModalOpen, setIsAddBookSuccessModalOpen] =
+    useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -76,6 +79,8 @@ export default function LibraryPage() {
       setBookTitle("");
       setAuthor("");
       setTotalPages("");
+
+      setIsAddBookSuccessModalOpen(true);
     } catch (error) {
       console.error("Failed to add book:", error);
     }
@@ -237,24 +242,28 @@ export default function LibraryPage() {
                     alt={book.title}
                     className={styles.bookImage}
                   />
-                  <h4 className={styles.bookTitle}>
-                    {formatTitle(book.title)}
-                  </h4>
-                  <p className={styles.bookAuthor}>{book.author}</p>
+                  <div className={styles.bookFooter}>
+                    <div className={styles.bookInfo}>
+                      <h4 className={styles.bookTitle}>
+                        {formatTitle(book.title)}
+                      </h4>
+                      <p className={styles.bookAuthor}>{book.author}</p>
+                    </div>
 
-                  <button
-                    type="button"
-                    className={styles.deleteBtn}
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleDelete(book._id || book.id!);
-                    }}
-                    aria-label="Delete book"
-                  >
-                    <svg width="28" height="28">
-                      <use href="/icons.svg#icon-trash" />
-                    </svg>
-                  </button>
+                    <button
+                      type="button"
+                      className={styles.deleteBtn}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleDelete(book._id || book.id!);
+                      }}
+                      aria-label="Delete book"
+                    >
+                      <svg width="28" height="28">
+                        <use href="/icons.svg#icon-trash" />
+                      </svg>
+                    </button>
+                  </div>
                 </div>
               ))
             ) : (
@@ -279,6 +288,11 @@ export default function LibraryPage() {
           </div>
         )}
       </main>
+
+      <AddBookSuccessModal
+        isOpen={isAddBookSuccessModalOpen}
+        onClose={() => setIsAddBookSuccessModalOpen(false)}
+      />
     </div>
   );
 }

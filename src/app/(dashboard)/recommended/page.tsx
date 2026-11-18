@@ -7,6 +7,7 @@ import { Book } from "@/types";
 import styles from "./page.module.css";
 import BookModal from "@/components/Modals/BookModal/BookModal";
 import Loader from "@/components/Loader/Loader";
+import AddBookSuccessModal from "@/components/Modals/AddBookSuccessModal/AddBookSuccessModal";
 
 export default function RecommendedPage() {
   const [books, setBooks] = useState<Book[]>([]);
@@ -15,6 +16,8 @@ export default function RecommendedPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [selectedBook, setSelectedBook] = useState<Book | null>(null);
   const [isAdding, setIsAdding] = useState(false);
+  const [isAddBookSuccessModalOpen, setIsAddBookSuccessModalOpen] =
+    useState(false);
 
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
@@ -70,7 +73,7 @@ export default function RecommendedPage() {
       setIsAdding(true);
       await addBookFromRecommend(bookId);
       setSelectedBook(null);
-      // Тут можна додати виклик тосту або відкрити попап успіху "Good job"
+      setIsAddBookSuccessModalOpen(true);
     } catch (error) {
       console.error("Failed to add book:", error);
     } finally {
@@ -225,6 +228,11 @@ export default function RecommendedPage() {
           isAdding={isAdding}
         />
       )}
+
+      <AddBookSuccessModal
+        isOpen={isAddBookSuccessModalOpen}
+        onClose={() => setIsAddBookSuccessModalOpen(false)}
+      />
     </div>
   );
 }

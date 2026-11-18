@@ -363,7 +363,6 @@
 }
 
 .bookCard {
-  position: relative;
   display: flex;
   flex-direction: column;
   width: 137px;
@@ -375,6 +374,22 @@
   object-fit: contain;
   border-radius: 8px;
   background-color: #262626;
+}
+
+.bookFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.bookInfo {
+  display: flex;
+  flex-direction: column;
+  padding: 2px 0;
+  gap: 2px;
+  min-width: 0;
+  flex-grow: 1;
 }
 
 .bookTitle {
@@ -406,14 +421,30 @@
 }
 
 .deleteBtn {
-  position: absolute;
-  bottom: 14px;
-  right: 14px;
-  background: transparent;
-  border: none;
-
-  color: #f9f9f9;
   display: flex;
   align-items: center;
   justify-content: center;
+
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background-color: rgba(232, 80, 80, 0.1);
+  border: 1px solid rgba(232, 80, 80, 0.2);
+
+  margin-top: 2px;
+  padding: 0;
+  color: #e85050;
+  flex-shrink: 0;
+}
+
+.deleteBtn svg {
+  stroke: currentColor;
+  fill: none;
+}
+
+.deleteBtn:hover,
+.deleteBtn:focus {
+  background-color: rgba(232, 80, 80, 0.3);
+  border-color: rgba(232, 80, 80, 0.6);
+  transform: scale(1.05);
 }
