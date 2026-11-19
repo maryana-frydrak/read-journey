@@ -15,11 +15,11 @@
 .modal {
   position: relative;
   width: 100%;
-  max-width: 342px; /* Компактніший розмір попапу за макетом */
+  max-width: 342px;
   background-color: #1f1f1f;
   border: 1px solid rgba(104, 104, 104, 0.2);
   border-radius: 12px;
-  padding: 40px 32px;
+  padding: 50px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -30,18 +30,28 @@
   position: absolute;
   top: 16px;
   right: 16px;
-  background: transparent;
+  background: none;
   border: none;
-  color: #f9f9f9;
+  padding: 0;
   cursor: pointer;
+
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0;
-  transition: opacity 0.2s ease;
+  width: 22px;
+  height: 22px;
 }
 
-.closeBtn:hover {
+.closeBtn svg {
+  width: 20px;
+  height: 20px;
+  stroke-width: 2.5px;
+  stroke: #f9f9fc;
+  fill: none;
+}
+
+.closeBtn:hover svg,
+.closeBtn:focus svg {
   opacity: 0.6;
 }
 
@@ -52,20 +62,17 @@
 }
 
 .iconWrapper {
-  margin-bottom: 20px;
+  margin-bottom: 32px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.emoji {
-  font-size: 50px; /* Або замінимо на SVG іконку великого пальця з твого спрайту, якщо вона там є */
-}
-
 .title {
   font-weight: 700;
-  font-size: 18px;
-  line-height: 1.33;
+  font-size: 20px;
+
+  line-height: 1;
   letter-spacing: -0.02em;
   color: #f9f9f9;
   margin: 0 0 14px 0;
@@ -74,8 +81,13 @@
 .message {
   font-weight: 500;
   font-size: 14px;
-  line-height: 1.28;
+
+  line-height: 1.29;
   letter-spacing: -0.02em;
   color: #686868;
   margin: 0;
+}
+
+.highlight {
+  color: #f9f9f9;
 }

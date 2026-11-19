@@ -12,6 +12,7 @@ import styles from "./page.module.css";
 import Loader from "@/components/Loader/Loader";
 import Link from "next/link";
 import AddBookSuccessModal from "@/components/Modals/AddBookSuccessModal/AddBookSuccessModal";
+import DeleteBookModal from "@/components/Modals/DeleteBookModal/DeleteBookModal";
 
 export default function LibraryPage() {
   const [books, setBooks] = useState<Book[]>([]);
@@ -24,7 +25,12 @@ export default function LibraryPage() {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const [isAddBookSuccessModalOpen, setIsAddBookSuccessModalOpen] =
-    useState(false);
+    useState(true);
+  const [bookToDelete, setBookToDelete] = useState<{
+    id: string;
+    title?: string;
+  } | null>(null);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -86,15 +92,32 @@ export default function LibraryPage() {
     }
   };
 
-  const handleDelete = async (bookId: string) => {
+  const handleOpenDeleteModal = (book: Book) => {
+    const bookId = book._id || book.id;
+    if (!bookId) return;
+    setBookToDelete({ id: bookId, title: book.title });
+  };
+
+  const handleCloseDeleteModal = () => {
+    if (isDeleting) return;
+    setBookToDelete(null);
+  };
+
+  const handleConfirmDelete = async () => {
+    if (!bookToDelete) return;
+
     try {
-      await removeUserBook(bookId);
+      setIsDeleting(true);
+      await removeUserBook(bookToDelete.id);
 
       setBooks((prevBooks) =>
-        prevBooks.filter((b) => (b._id || b.id) !== bookId),
+        prevBooks.filter((b) => (b._id || b.id) !== bookToDelete.id),
       );
+      setBookToDelete(null);
     } catch (error) {
       console.error("Failed to delete book:", error);
+    } finally {
+      setIsDeleting(false);
     }
   };
 
@@ -255,7 +278,7 @@ export default function LibraryPage() {
                       className={styles.deleteBtn}
                       onClick={(e) => {
                         e.stopPropagation();
-                        handleDelete(book._id || book.id!);
+                        handleOpenDeleteModal(book);
                       }}
                       aria-label="Delete book"
                     >
@@ -292,6 +315,14 @@ export default function LibraryPage() {
       <AddBookSuccessModal
         isOpen={isAddBookSuccessModalOpen}
         onClose={() => setIsAddBookSuccessModalOpen(false)}
+      />
+
+      <DeleteBookModal
+        isOpen={Boolean(bookToDelete)}
+        bookTitle={bookToDelete?.title}
+        isDeleting={isDeleting}
+        onClose={handleCloseDeleteModal}
+        onConfirm={handleConfirmDelete}
       />
     </div>
   );

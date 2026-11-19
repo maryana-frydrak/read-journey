@@ -70,25 +70,64 @@ export const getCurrentUser = async () => {
   return data;
 };
 
-export const refreshCurrentUser = async () => {
+type RefreshResponse = {
+  token?: string;
+  refreshToken?: string;
+};
+
+let refreshPromise: Promise<RefreshResponse> | null = null;
+
+export const refreshCurrentUser = async (): Promise<RefreshResponse> => {
   const refreshToken =
     typeof window !== "undefined" ? localStorage.getItem("refreshToken") : null;
 
-  const { data } = await nextServer.get("/users/current/refresh", {
-    headers: {
-      Authorization: `Bearer ${refreshToken}`,
-    },
-  });
-
-  if (data.token) {
-    setAuthToken(data.token);
+  if (!refreshToken) {
+    throw new Error("No refresh token available");
   }
 
-  if (data.refreshToken) {
-    localStorage.setItem("refreshToken", data.refreshToken);
+  if (!refreshPromise) {
+    refreshPromise = nextServer
+      .get<RefreshResponse>("/users/current/refresh", {
+        headers: {
+          Authorization: `Bearer ${refreshToken}`,
+        },
+      })
+      .then(({ data }) => {
+        if (data.token) {
+          setAuthToken(data.token);
+        }
+        if (data.refreshToken) {
+          localStorage.setItem("refreshToken", data.refreshToken);
+        }
+        return data;
+      })
+      .finally(() => {
+        refreshPromise = null;
+      });
   }
-  return data;
+
+  return refreshPromise;
 };
+
+// export const refreshCurrentUser = async () => {
+//   const refreshToken =
+//     typeof window !== "undefined" ? localStorage.getItem("refreshToken") : null;
+
+//   const { data } = await nextServer.get("/users/current/refresh", {
+//     headers: {
+//       Authorization: `Bearer ${refreshToken}`,
+//     },
+//   });
+
+//   if (data.token) {
+//     setAuthToken(data.token);
+//   }
+
+//   if (data.refreshToken) {
+//     localStorage.setItem("refreshToken", data.refreshToken);
+//   }
+//   return data;
+// };
 
 export const signoutUser = async () => {
   const { data } = await nextServer.post("/users/signout");
@@ -168,15 +207,19 @@ nextServer.interceptors.response.use(
     const originalRequest = error.config;
 
     if (
+      !originalRequest ||
       originalRequest.url?.includes("/users/current/refresh") ||
-      originalRequest.url?.includes("/users/signin")
+      originalRequest.url?.includes("/users/signin") ||
+      originalRequest.url?.includes("/users/signup")
     ) {
       return Promise.reject(error);
     }
 
-    const token =
-      typeof window !== "undefined" ? localStorage.getItem("token") : null;
-    if (!token) {
+    const refreshToken =
+      typeof window !== "undefined"
+        ? localStorage.getItem("refreshToken")
+        : null;
+    if (!refreshToken) {
       return Promise.reject(error);
     }
 

@@ -3,19 +3,21 @@
 import { useEffect } from "react";
 import styles from "./AddBookSuccessModal.module.css";
 
-interface SuccessModalProps {
+interface AddBookSuccessModalProps {
   isOpen: boolean;
-  onClose: () => void;
   title?: string;
   message?: string;
+  duration?: number;
+  onClose: () => void;
 }
 
 export default function SuccessModal({
   isOpen,
-  onClose,
   title = "Good job",
   message = "Your book is now in the library! The joy knows no bounds and now you can start your training",
-}: SuccessModalProps) {
+  duration = 3000,
+  onClose,
+}: AddBookSuccessModalProps) {
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
@@ -28,11 +30,18 @@ export default function SuccessModal({
       document.body.style.overflow = "hidden";
     }
 
+    if (!isOpen) return;
+
+    const timerId = window.setTimeout(() => {
+      onClose();
+    }, duration);
+
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
       document.body.style.overflow = "unset";
+      window.clearTimeout(timerId);
     };
-  }, [isOpen, onClose]);
+  }, [isOpen, duration, onClose]);
 
   if (!isOpen) return null;
 
@@ -58,13 +67,20 @@ export default function SuccessModal({
 
         <div className={styles.content}>
           <div className={styles.iconWrapper}>
-            {/* Тут можна підставити іконку великого пальця вгору або через емодзі / спрайт */}
-            <span role="img" aria-label="Thumbs up" className={styles.emoji}>
-              👍
-            </span>
+            <img
+              src="/images/thumb-up.png"
+              alt="Thumbs up"
+              width={68}
+              height={70}
+              className={styles.icon}
+            />
           </div>
           <h3 className={styles.title}>{title}</h3>
-          <p className={styles.message}>{message}</p>
+          <p className={styles.message}>
+            Your book is now in{" "}
+            <span className={styles.highlight}>the library!</span> The joy knows
+            no bounds and now you can <br /> start your training
+          </p>
         </div>
       </div>
     </div>
