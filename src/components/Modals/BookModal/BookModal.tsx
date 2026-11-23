@@ -66,11 +66,13 @@ export default function BookModal({
             <Loader />
           ) : (
             <>
-              <img
-                src={book.imageUrl}
-                alt={book.title}
-                className={styles.bookImage}
-              />
+              <div className={styles.imageWrapper}>
+                <img
+                  src={book.imageUrl}
+                  alt={book.title}
+                  className={styles.bookImage}
+                />
+              </div>
               <h3 className={styles.bookTitle}>{formatTitle(book.title)}</h3>
               <p className={styles.bookAuthor}>{book.author}</p>
               <p className={styles.bookPages}>{book.totalPages} pages</p>

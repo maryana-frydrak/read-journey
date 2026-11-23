@@ -13,6 +13,8 @@ import Loader from "@/components/Loader/Loader";
 import Link from "next/link";
 import AddBookSuccessModal from "@/components/Modals/AddBookSuccessModal/AddBookSuccessModal";
 import DeleteBookModal from "@/components/Modals/DeleteBookModal/DeleteBookModal";
+import BookDetailsModal from "@/components/Modals/BookDetailsModal/BookDetailsModal";
+// ...
 
 export default function LibraryPage() {
   const [books, setBooks] = useState<Book[]>([]);
@@ -25,12 +27,13 @@ export default function LibraryPage() {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const [isAddBookSuccessModalOpen, setIsAddBookSuccessModalOpen] =
-    useState(true);
+    useState(false);
   const [bookToDelete, setBookToDelete] = useState<{
     id: string;
     title?: string;
   } | null>(null);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [selectedBook, setSelectedBook] = useState<Book | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -260,11 +263,14 @@ export default function LibraryPage() {
             {filteredBooks.length > 0 ? (
               filteredBooks.map((book: Book) => (
                 <div key={book._id || book.id} className={styles.bookCard}>
-                  <img
-                    src={book.imageUrl || "/images/unsplash.jpg"}
-                    alt={book.title}
-                    className={styles.bookImage}
-                  />
+                  <div className={styles.imageWrapper}>
+                    <img
+                      src={book.imageUrl || "/images/unsplash.jpg"}
+                      alt={book.title}
+                      className={styles.bookImage}
+                      onClick={() => setSelectedBook(book)}
+                    />
+                  </div>
                   <div className={styles.bookFooter}>
                     <div className={styles.bookInfo}>
                       <h4 className={styles.bookTitle}>
@@ -323,6 +329,11 @@ export default function LibraryPage() {
         isDeleting={isDeleting}
         onClose={handleCloseDeleteModal}
         onConfirm={handleConfirmDelete}
+      />
+
+      <BookDetailsModal
+        book={selectedBook}
+        onClose={() => setSelectedBook(null)}
       />
     </div>
   );

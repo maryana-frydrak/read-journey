@@ -205,11 +205,13 @@ export default function RecommendedPage() {
                 className={styles.bookCard}
                 onClick={() => setSelectedBook(book)}
               >
-                <img
-                  src={book.imageUrl}
-                  alt={book.title}
-                  className={styles.bookImage}
-                />
+                <div className={styles.imageWrapper}>
+                  <img
+                    src={book.imageUrl}
+                    alt={book.title}
+                    className={styles.bookImage}
+                  />
+                </div>
                 <h4 className={styles.bookTitle}>{formatTitle(book.title)}</h4>
                 <p className={styles.bookAuthor}>{book.author}</p>
               </div>
