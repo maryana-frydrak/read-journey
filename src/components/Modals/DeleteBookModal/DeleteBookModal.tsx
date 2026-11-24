@@ -36,7 +36,7 @@ export default function DeleteBookModal({
           disabled={isDeleting}
           aria-label="Close modal"
         >
-          <svg width="20" height="20">
+          <svg width="22" height="22">
             <use href="/icons.svg#icon-close" />
           </svg>
         </button>

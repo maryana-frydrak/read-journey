@@ -25,7 +25,7 @@ export default function LogoutModal({ isOpen, onClose }: LogoutModalProps) {
     <div className={styles.backdrop} onClick={onClose}>
       <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
         <button type="button" className={styles.closeBtn} onClick={onClose}>
-          <svg width="20" height="20">
+          <svg width="22" height="22">
             <use href="/icons.svg#icon-close" />
           </svg>
         </button>

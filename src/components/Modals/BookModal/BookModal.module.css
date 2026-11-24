@@ -8,8 +8,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000;
-  padding: 20px;
+  z-index: 999;
+  padding: 16px;
 }
 
 .modal {
@@ -29,20 +29,27 @@
   position: absolute;
   top: 16px;
   right: 16px;
-  background: transparent;
+  background: none;
   border: none;
-  color: #f9f9f9;
-  stroke: #f9f9f9;
+  padding: 0;
 
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0;
-  transition: opacity 0.2s ease;
+  width: 22px;
+  height: 22px;
 }
 
-.closeBtn:hover,
-.closeBtn:hover {
+.closeBtn svg {
+  width: 20px;
+  height: 20px;
+  stroke-width: 2.5px;
+  stroke: #f9f9fc;
+  fill: none;
+}
+
+.closeBtn:hover svg,
+.closeBtn:focus svg {
   opacity: 0.6;
 }
 
