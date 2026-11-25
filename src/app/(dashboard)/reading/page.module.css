@@ -9,14 +9,15 @@
 }
 
 .sidebar {
-  width: 353px;
-  flex-shrink: 0;
-  background-color: #1f1f1f;
-  border-radius: 30px;
-  padding: 40px 20px;
   display: flex;
   flex-direction: column;
   gap: 40px;
+  width: 353px;
+  flex-shrink: 0;
+
+  padding: 40px 20px;
+  border-radius: 30px;
+  background-color: #1f1f1f;
 }
 
 .formWrapper {
@@ -60,11 +61,17 @@
   background: transparent;
   border: none;
   outline: none;
-  color: #f9f9f9;
+
   font-weight: 500;
   font-size: 14px;
   line-height: 1.29;
   letter-spacing: -0.02em;
+  color: #f9f9f9;
+}
+
+.input::placeholder {
+  color: #f9f9f9;
+  opacity: 1;
 }
 
 .input::-webkit-outer-spin-button,
@@ -79,12 +86,12 @@
   border-radius: 30px;
   padding: 12px 28px;
   background-color: transparent;
-  color: #f9f9f9;
+
   font-weight: 700;
   font-size: 16px;
   line-height: 1.12;
   letter-spacing: 0.02em;
-  cursor: pointer;
+  color: #f9f9f9;
   transition: all 0.2s ease;
 }
 
@@ -130,7 +137,10 @@
 }
 
 .starIcon {
+  width: 50%;
+  height: 70%;
   object-fit: contain;
+  display: block;
 }
 
 .content {
@@ -146,6 +156,7 @@
 .pageTitle {
   font-weight: 700;
   font-size: 28px;
+
   line-height: 1.14;
   letter-spacing: 0.02em;
   color: #f9f9f9;
@@ -157,42 +168,41 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
-  margin: auto 0;
+  margin: 0 auto;
 }
 
 .imageWrapper {
-  width: 224px;
+  width: 100%;
   height: 340px;
-  border-radius: 8px;
-  background-color: #262626;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  margin-bottom: 25px;
+  box-sizing: border-box;
 }
 
 .bookImage {
-  width: 100%;
   height: 100%;
   object-fit: contain;
   border-radius: 8px;
-  display: block;
 }
 
 .bookTitle {
   font-weight: 700;
   font-size: 20px;
+
   line-height: 1;
   letter-spacing: -0.02em;
   color: #f9f9f9;
-  margin: 0 0 4px;
-  max-width: 320px;
+
+  margin: 25 0 4px;
+  max-width: 317px;
 }
 
 .bookAuthor {
   font-weight: 500;
   font-size: 14px;
+
   line-height: 1.29;
   letter-spacing: -0.02em;
   color: #686868;
@@ -209,7 +219,6 @@
   align-items: center;
   justify-content: center;
   padding: 0;
-  cursor: pointer;
 }
 
 .recordInner {

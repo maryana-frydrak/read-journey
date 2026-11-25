@@ -71,8 +71,8 @@ export default function ReadingPage() {
         <div className={styles.progressSection}>
           <h3 className={styles.progressTitle}>Progress</h3>
           <p className={styles.progressText}>
-            Here you will see when and how much you read. To record, click on
-            the red button above.
+            Here you will see when and how much you read.
+            <br /> To record, click on the red button above.
           </p>
 
           <div className={styles.starWrapper}>
@@ -80,7 +80,7 @@ export default function ReadingPage() {
               src="/images/star.png"
               alt="Star"
               width={50}
-              height={50}
+              height={70}
               className={styles.starIcon}
             />
           </div>
