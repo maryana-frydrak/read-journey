@@ -1,11 +1,29 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useSearchParams } from "next/navigation";
-import { getBookById, getOwnBooks } from "@/redux/api";
-import { Book } from "@/types";
+import { finishReading, getBookById, startReading } from "@/redux/api";
+import { Book, BookWithProgress } from "@/types";
 import Loader from "@/components/Loader/Loader";
 import styles from "./page.module.css";
+
+function hasActiveReadingSession(bookData: BookWithProgress | null): boolean {
+  if (!bookData) return false;
+
+  if (Array.isArray(bookData.progress) && bookData.progress.length > 0) {
+    const lastSession = bookData.progress[bookData.progress.length - 1];
+    if (
+      lastSession &&
+      lastSession.finishPage === undefined &&
+      !lastSession.finishReading &&
+      lastSession.status !== "inactive"
+    ) {
+      return true;
+    }
+  }
+
+  return bookData.status === "in-progress";
+}
 
 export default function ReadingPage() {
   const searchParams = useSearchParams();
@@ -14,39 +32,68 @@ export default function ReadingPage() {
   const [book, setBook] = useState<Book | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [pageNumber, setPageNumber] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [isReading, setIsReading] = useState(false);
+
+  const syncBookState = useCallback((bookData: BookWithProgress | null) => {
+    setBook(bookData);
+    setIsReading(hasActiveReadingSession(bookData));
+  }, []);
 
   useEffect(() => {
     const fetchBook = async () => {
       try {
         setIsLoading(true);
-        if (bookId) {
-          const data = await getBookById(bookId);
-          setBook(data.book || data);
-        } else {
-          const ownData = await getOwnBooks();
-          const list = Array.isArray(ownData) ? ownData : ownData.results || [];
-          setBook(list[0] || null);
+        if (!bookId) {
+          syncBookState(null);
+          return;
         }
+
+        const data = await getBookById(bookId);
+        syncBookState(data.book || data);
       } catch (error) {
         console.error("Failed to fetch book for reading:", error);
+        syncBookState(null);
       } finally {
         setIsLoading(false);
       }
     };
 
     fetchBook();
-  }, [bookId]);
+  }, [bookId, syncBookState]);
 
-  const handleToggleReading = (e: React.FormEvent) => {
+  const handleReadingSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsReading((prev) => !prev);
+    const targetBookId = book?._id || book?.id || bookId;
+    const parsedPage = Number(pageNumber);
+
+    if (!targetBookId || isSubmitting || !parsedPage || parsedPage < 1) {
+      return;
+    }
+
+    try {
+      setIsSubmitting(true);
+
+      if (!isReading) {
+        await startReading({ id: targetBookId, page: parsedPage });
+      } else {
+        await finishReading({ id: targetBookId, page: parsedPage });
+      }
+
+      const refreshedData = await getBookById(targetBookId);
+      syncBookState(refreshedData.book || refreshedData);
+      setPageNumber("");
+    } catch (error) {
+      console.error("Reading action failed:", error);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
     <div className={styles.container}>
       <aside className={styles.sidebar}>
-        <form onSubmit={handleToggleReading} className={styles.formWrapper}>
+        <form onSubmit={handleReadingSubmit} className={styles.formWrapper}>
           <p className={styles.sectionTitle}>
             {isReading ? "Stop page:" : "Start page:"}
           </p>
