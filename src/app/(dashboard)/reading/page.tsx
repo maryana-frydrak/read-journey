@@ -11,15 +11,14 @@ function hasActiveReadingSession(bookData: BookWithProgress | null): boolean {
   if (!bookData) return false;
 
   if (Array.isArray(bookData.progress) && bookData.progress.length > 0) {
-    const lastSession = bookData.progress[bookData.progress.length - 1];
-    if (
-      lastSession &&
-      lastSession.finishPage === undefined &&
-      !lastSession.finishReading &&
-      lastSession.status !== "inactive"
-    ) {
-      return true;
-    }
+    return bookData.progress.some(
+      (session) =>
+        session.status === "active" ||
+        (session.finishPage === undefined &&
+          !session.finishReading &&
+          session.status !== "inactive" &&
+          session.status !== "finished"),
+    );
   }
 
   return bookData.status === "in-progress";
